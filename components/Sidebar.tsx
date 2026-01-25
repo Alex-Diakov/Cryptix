@@ -15,7 +15,8 @@ import {
   Building,
   FileCheck,
   ChevronRight,
-  ShieldAlert
+  ShieldAlert,
+  Layers // Ensure Layers is imported
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -43,6 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'trade', label: 'Instant Trade', icon: ArrowLeftRight },
+    { id: 'earn', label: 'Liquidity & Yield', icon: Layers }, // Moved here
     { id: 'pro-trade', label: 'Trading Terminal', icon: LayoutGrid },
     { id: 'automation', label: 'Strategy Automation', icon: Workflow },
     { id: 'history', label: 'CFO Console', icon: FileText },

@@ -24,7 +24,9 @@ import {
   Wifi,
   Server,
   Command,
-  Hash
+  Hash,
+  LayoutList,
+  LayoutGrid
 } from 'lucide-react';
 
 const DesignSystemView: React.FC = () => {
@@ -543,6 +545,133 @@ const DesignSystemView: React.FC = () => {
                             "Never use light grey text on colored buttons. It fails WCAG AA standards."
                         </p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        {/* SECTION 9: DATA TABLES & INTERACTION */}
+        <section className="space-y-8">
+            <div className="flex items-end justify-between border-b border-white/5 pb-2">
+                <div className="flex items-center gap-2">
+                    <LayoutList className="text-emerald-500" size={20} />
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">09. Data Tables & Interaction</h2>
+                </div>
+                <span className="text-[10px] font-mono text-zinc-600">Complex Lists & Filtering</span>
+            </div>
+
+            {/* Example 1: Top Opportunities Table */}
+            <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] p-8 relative overflow-hidden">
+                <div className="mb-6 flex justify-between items-end">
+                    <div>
+                        <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Component: Opportunity Table</h3>
+                        <p className="text-zinc-400 text-xs">Used in Liquidity Manager. Features sorting, filtering, and rich data presentation.</p>
+                    </div>
+                </div>
+
+                {/* THE TABLE PREVIEW */}
+                <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] overflow-hidden shadow-xl backdrop-blur-md relative flex flex-col max-w-4xl mx-auto">
+                    {/* Header Toolbar */}
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#0a0a0a]/50">
+                         <div className="flex items-center gap-3">
+                             <h3 className="text-sm font-black text-white uppercase tracking-wide">Top Opportunities</h3>
+                         </div>
+                         
+                         <div className="flex items-center gap-2">
+                             <div className="flex bg-zinc-900 rounded-lg p-1 border border-white/5 mr-2">
+                                <button className="px-3 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-wider transition-all bg-zinc-800 text-white shadow-sm flex items-center gap-1">
+                                    APY
+                                </button>
+                                <button className="px-3 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-wider transition-all text-zinc-500 hover:text-zinc-300 flex items-center gap-1">
+                                    Risk
+                                </button>
+                                <button className="px-3 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-wider transition-all text-zinc-500 hover:text-zinc-300 flex items-center gap-1">
+                                    TVL
+                                </button>
+                             </div>
+
+                             <div className="flex bg-zinc-900 rounded-lg p-1 border border-white/5">
+                                <button className="p-1.5 rounded-md transition-all bg-zinc-800 text-white shadow-sm">
+                                    <LayoutList size={14} />
+                                </button>
+                                <button className="p-1.5 rounded-md transition-all text-zinc-500 hover:text-white">
+                                    <LayoutGrid size={14} />
+                                </button>
+                             </div>
+                         </div>
+                     </div>
+
+                     {/* Table Content */}
+                     <div className="w-full text-left">
+                        <div className="bg-[#0a0a0a]/90 backdrop-blur sticky top-0 z-10 text-[9px] font-black uppercase tracking-[0.15em] text-zinc-500 border-b border-white/10 grid grid-cols-6 px-6 py-4">
+                            <div className="col-span-2">Strategy</div>
+                            <div>Risk Profile</div>
+                            <div className="text-right">TVL</div>
+                            <div className="text-right">Net APY</div>
+                            <div className="text-right">Action</div>
+                        </div>
+                        
+                        <div className="divide-y divide-white/[0.03]">
+                            {/* Row 1 */}
+                            <div className="grid grid-cols-6 px-6 py-4 items-center group hover:bg-white/[0.02] transition-colors cursor-pointer">
+                                <div className="col-span-2 flex items-center gap-3">
+                                    <div className="flex -space-x-2">
+                                        <div className="w-8 h-8 rounded-full border-2 border-[#121214] bg-zinc-800 flex items-center justify-center text-[8px] text-white font-bold z-20">A</div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-[#121214] bg-zinc-700 flex items-center justify-center text-[8px] text-white font-bold z-10">B</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">GMX GLP Index</div>
+                                        <div className="text-[9px] text-zinc-500 font-mono flex items-center gap-1.5 mt-0.5">
+                                            GMX • Liquidity
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[9px] font-black uppercase tracking-wider border bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
+                                        <ShieldCheck size={10} /> Low Risk
+                                    </div>
+                                </div>
+                                <div className="text-right font-mono text-xs font-bold text-zinc-300">$480M</div>
+                                <div className="text-right">
+                                    <span className="text-lg font-mono font-bold text-emerald-400 text-shadow-glow">38.2%</span>
+                                </div>
+                                <div className="text-right">
+                                    <button className="px-4 py-2 bg-zinc-800 text-zinc-300 border border-white/5 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all shadow-sm">
+                                        View
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Row 2 */}
+                            <div className="grid grid-cols-6 px-6 py-4 items-center group hover:bg-white/[0.02] transition-colors cursor-pointer">
+                                <div className="col-span-2 flex items-center gap-3">
+                                    <div className="flex -space-x-2">
+                                        <div className="w-8 h-8 rounded-full border-2 border-[#121214] bg-blue-900 flex items-center justify-center text-[8px] text-white font-bold z-20">U</div>
+                                        <div className="w-8 h-8 rounded-full border-2 border-[#121214] bg-zinc-700 flex items-center justify-center text-[8px] text-white font-bold z-10">E</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">Uniswap V3 Pool</div>
+                                        <div className="text-[9px] text-zinc-500 font-mono flex items-center gap-1.5 mt-0.5">
+                                            Uniswap • Market Making
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[9px] font-black uppercase tracking-wider border bg-amber-500/10 text-amber-500 border-amber-500/20">
+                                        <ShieldCheck size={10} /> Moderate
+                                    </div>
+                                </div>
+                                <div className="text-right font-mono text-xs font-bold text-zinc-300">$840M</div>
+                                <div className="text-right">
+                                    <span className="text-lg font-mono font-bold text-emerald-400 text-shadow-glow">24.5%</span>
+                                </div>
+                                <div className="text-right">
+                                    <button className="px-4 py-2 bg-zinc-800 text-zinc-300 border border-white/5 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all shadow-sm">
+                                        View
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
                 </div>
             </div>
         </section>

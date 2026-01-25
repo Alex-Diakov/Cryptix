@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { 
@@ -38,7 +37,8 @@ import {
   ExternalLink,
   Ban,
   Eye,
-  BarChart2
+  BarChart2,
+  Timer
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -59,12 +59,6 @@ const formatMoney = (val: number) => new Intl.NumberFormat('en-US', { style: 'cu
 const formatToken = (val: number) => new Intl.NumberFormat('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(val);
 const formatTokenAmount = (val: number) => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val);
 const formatPercent = (val: number) => `${val > 0 ? '+' : ''}${val.toFixed(2)}%`;
-
-const formatImpactPercent = (val: number) => {
-    if (val > 0 && val < 0.01) return '< 0.01%';
-    if (val === 0) return '0.00%';
-    return `~${val.toFixed(2)}%`;
-};
 
 interface EducationalTooltipProps {
   title: string;
@@ -92,7 +86,7 @@ const EducationalTooltip: React.FC<EducationalTooltipProps> = ({ title, desc, ch
         });
         setIsVisible(true);
       }
-    }, 500); // Reduced delay for better UX
+    }, 500);
   };
 
   const handleMouseLeave = () => {
@@ -211,7 +205,10 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
   const [gasSpeed, setGasSpeed] = useState<'slow' | 'normal' | 'fast'>('normal');
   const [isGasSelectorOpen, setIsGasSelectorOpen] = useState(false);
   const [isTokenSelectorOpen, setIsTokenSelectorOpen] = useState(false);
-  const [selectorSide, setSelectorSide] = useState<'pay' | 'receive'>('pay');
+  
+  // INLINE CONFIRMATION STATE (Replaces Modal)
+  const [isReviewing, setIsReviewing] = useState(false);
+  const [reviewTimer, setReviewTimer] = useState(15);
 
   const ETH_PRICE = 3208.93;
   const ETH_BALANCE = 350.0000; 
@@ -245,6 +242,24 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
         }
     }
   }, [initialState]);
+
+  // Review Timer Logic
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+    if (isReviewing) {
+        setReviewTimer(15); // Reset
+        interval = setInterval(() => {
+            setReviewTimer(prev => {
+                if (prev <= 1) {
+                    setIsReviewing(false); // Auto cancel
+                    return 15;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isReviewing]);
 
   const getGasPrice = () => {
     switch(gasSpeed) {
@@ -704,6 +719,16 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
     return () => clearInterval(interval);
   }, [isAlgoRunning, executionProgress]);
 
+  const handleConfirmOrder = () => {
+      if (tradeMode === 'algo') {
+          setIsAlgoRunning(true);
+      } else {
+          // Main Swap/Limit Execution
+          console.log("Order Executed");
+          setIsReviewing(false);
+      }
+  };
+
   const structureData = useMemo(() => {
       const data = [];
       let currentP = 3195; 
@@ -1132,7 +1157,7 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
                         </div>
                     </div>
 
-                    {/* CTA BUTTON - UPDATED TO EMERALD */}
+                    {/* CTA BUTTON */}
                     <button 
                         onClick={() => setIsAlgoRunning(true)}
                         disabled={numericPay <= 0 || isInsufficientBalance}
@@ -1288,7 +1313,7 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
                         </div>
                     </div>
 
-                    {/* CARD C: ORDER ANALYTICS (Renamed from Summary) */}
+                    {/* CARD C: ORDER ANALYTICS */}
                     <div className="px-5 py-2">
                         <div className="flex items-center justify-between mb-4 px-2">
                             <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Order Analytics</span>
@@ -1334,6 +1359,7 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
 
                     {/* CTA BUTTON */}
                     <button 
+                        onClick={() => handleConfirmOrder()}
                         disabled={numericPay <= 0 || isInsufficientBalance || simulation.postOnlyWarning}
                         className={`mt-4 w-full py-4 rounded-xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl transition-all active:scale-[0.98] ${
                             isInsufficientBalance || numericPay <= 0 || simulation.postOnlyWarning
@@ -1348,115 +1374,125 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
                 // REDESIGNED SWAP LAYOUT (MATCHING ALGO)
                 <div className="flex-1 flex flex-col gap-4">
                     {/* CARD A: ORDER CONFIGURATION */}
-                    <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-5 space-y-6 shadow-xl backdrop-blur-sm">
-                        {/* Pay Section */}
-                        <div className="space-y-4">
-                            <div className="flex justify-between items-start">
-                                <div className="flex flex-col gap-2 w-full">
-                                     <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest flex justify-between w-full pr-1">
-                                        <span>You Pay</span>
-                                        <span className="font-mono text-zinc-500">Bal: {formatToken(ETH_BALANCE)}</span>
-                                     </label>
-                                     <div className="flex items-center gap-3">
-                                        <input 
-                                            type="text" 
-                                            value={payAmount}
-                                            onChange={handleAmountChange}
-                                            className="text-4xl lg:text-5xl font-mono font-medium tracking-tighter bg-transparent outline-none placeholder:text-zinc-800 text-white w-full min-w-0" 
-                                            placeholder="0.00" 
-                                        />
-                                        <button 
-                                            onClick={() => setIsTokenSelectorOpen(true)}
-                                            className="flex items-center gap-2 bg-zinc-950/50 border border-white/10 px-3 py-2 rounded-xl hover:border-white/20 transition-colors shrink-0"
-                                        >
-                                            <img src={ETH_ICON} className="w-5 h-5 object-contain" alt="ETH" />
-                                            <span className="font-bold text-white text-sm">ETH</span>
-                                            <ChevronDown size={12} className="text-zinc-600" />
-                                        </button>
-                                     </div>
-                                     {/* Percentage Buttons */}
-                                     <div className="flex gap-2 mt-1">
-                                        {[25, 50, 75, 100].map(pct => (
-                                            <button 
-                                                key={pct}
-                                                onClick={() => handlePercentageClick(pct)}
-                                                className="border border-white/10 text-[10px] font-bold text-zinc-500 px-3 py-1 rounded-md hover:bg-white/5 hover:text-white transition-colors"
-                                            >
-                                                {pct === 100 ? 'MAX' : `${pct}%`}
-                                            </button>
-                                        ))}
-                                     </div>
-                                </div>
-                            </div>
-
-                            {/* Connector */}
-                            <div className="relative h-px bg-white/5 w-full my-2">
-                                <div className="absolute left-1/2 -translate-x-1/2 -top-3 p-1.5 bg-[#0e0e11] border border-white/10 rounded-full text-zinc-500 shadow-sm">
-                                    <ArrowDown size={12} />
-                                </div>
-                            </div>
-
-                            {/* Receive Section */}
-                            <div className="flex justify-between items-end">
-                                <div className="flex flex-col gap-2 w-full">
-                                     <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">
-                                        {recipientMode ? "RECIPIENT GETS" : "Estimated Receive"}
-                                     </label>
-                                     <div className="flex items-center gap-3">
-                                        <div className="flex flex-col w-full min-w-0">
-                                            <div className="text-3xl lg:text-4xl font-mono font-medium tracking-tighter text-zinc-300 truncate">
-                                                {payAmount ? formatTokenAmount(simulation.receiveValNum) : '0.00'}
-                                            </div>
-                                            <div className="text-xs font-mono font-bold text-zinc-600 mt-1">
-                                                ≈ {payAmount ? formatMoney(simulation.receiveValNum) : '$0.00'}
-                                            </div>
-                                        </div>
-                                        <button 
-                                            onClick={() => setIsTokenSelectorOpen(true)}
-                                            className="flex items-center gap-2 bg-zinc-950/50 border border-white/5 px-3 py-2 rounded-xl hover:border-white/10 transition-colors shrink-0 self-start"
-                                        >
-                                            <img src={USDC_ICON} className="w-5 h-5 object-contain" alt="USDC" />
-                                            <span className="font-bold text-white text-sm">USDC</span>
-                                            <ChevronDown size={12} className="text-zinc-600" />
-                                        </button>
-                                     </div>
-                                </div>
-                            </div>
-
-                             {/* Recipient Address (New Feature) */}
-                             <div className="pt-4 mt-4 border-t border-white/5">
-                                <div
-                                    className="flex items-center gap-2 cursor-pointer group"
-                                    onClick={() => setRecipientMode(!recipientMode)}
-                                >
-                                    <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${recipientMode ? 'bg-emerald-500 border-emerald-500' : 'border-zinc-700 bg-zinc-900'}`}>
-                                        {recipientMode && <Check size={10} className="text-black stroke-[4px]" />}
-                                    </div>
-                                    <span className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-300 uppercase tracking-wide">Send to a different address</span>
-                                </div>
-
-                                {recipientMode && (
-                                    <div className="mt-3 animate-in fade-in slide-in-from-top-2">
-                                        <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest mb-1 block">Recipient Address</label>
-                                        <div className="relative">
-                                            <input
-                                                type="text"
-                                                placeholder="0x..."
-                                                className="w-full bg-[#050505] border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-xs font-mono text-white focus:outline-none focus:border-emerald-500/50"
+                    {/* WRAPPER FOR LOCK STATE */}
+                    <div className={`transition-all duration-300 relative ${isReviewing ? 'opacity-50 pointer-events-none grayscale-[0.5]' : ''}`}>
+                        <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-5 space-y-6 shadow-xl backdrop-blur-sm">
+                            {/* Pay Section */}
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-start">
+                                    <div className="flex flex-col gap-2 w-full">
+                                        <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest flex justify-between w-full pr-1">
+                                            <span>You Pay</span>
+                                            <span className="font-mono text-zinc-500">Bal: {formatToken(ETH_BALANCE)}</span>
+                                        </label>
+                                        <div className="flex items-center gap-3">
+                                            <input 
+                                                type="text" 
+                                                value={payAmount}
+                                                onChange={handleAmountChange}
+                                                className="text-4xl lg:text-5xl font-mono font-medium tracking-tighter bg-transparent outline-none placeholder:text-zinc-800 text-white w-full min-w-0" 
+                                                placeholder="0.00" 
                                             />
-                                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600">
-                                                <User size={12} />
-                                            </div>
-                                            {/* Address validation check mock */}
-                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500">
-                                                 <ShieldCheck size={12} />
-                                            </div>
+                                            <button 
+                                                onClick={() => setIsTokenSelectorOpen(true)}
+                                                className="flex items-center gap-2 bg-zinc-950/50 border border-white/10 px-3 py-2 rounded-xl hover:border-white/20 transition-colors shrink-0"
+                                            >
+                                                <img src={ETH_ICON} className="w-5 h-5 object-contain" alt="ETH" />
+                                                <span className="font-bold text-white text-sm">ETH</span>
+                                                <ChevronDown size={12} className="text-zinc-600" />
+                                            </button>
+                                        </div>
+                                        {/* Percentage Buttons */}
+                                        <div className="flex gap-2 mt-1">
+                                            {[25, 50, 75, 100].map(pct => (
+                                                <button 
+                                                    key={pct}
+                                                    onClick={() => handlePercentageClick(pct)}
+                                                    className="border border-white/10 text-[10px] font-bold text-zinc-500 px-3 py-1 rounded-md hover:bg-white/5 hover:text-white transition-colors"
+                                                >
+                                                    {pct === 100 ? 'MAX' : `${pct}%`}
+                                                </button>
+                                            ))}
                                         </div>
                                     </div>
-                                )}
-                            </div>
+                                </div>
 
+                                {/* Connector */}
+                                <div className="relative h-px bg-white/5 w-full my-2">
+                                    <div className="absolute left-1/2 -translate-x-1/2 -top-3 p-1.5 bg-[#0e0e11] border border-white/10 rounded-full text-zinc-500 shadow-sm">
+                                        <ArrowDown size={12} />
+                                    </div>
+                                </div>
+
+                                {/* Receive Section */}
+                                <div className="flex justify-between items-end">
+                                    <div className="flex flex-col gap-2 w-full">
+                                        <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">
+                                            {recipientMode ? "RECIPIENT GETS" : "Estimated Receive"}
+                                        </label>
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex flex-col w-full min-w-0">
+                                                <div className="text-3xl lg:text-4xl font-mono font-medium tracking-tighter text-zinc-300 truncate">
+                                                    {payAmount ? formatTokenAmount(simulation.receiveValNum) : '0.00'}
+                                                </div>
+                                                <div className="text-xs font-mono font-bold text-zinc-600 mt-1">
+                                                    ≈ {payAmount ? formatMoney(simulation.receiveValNum) : '$0.00'}
+                                                </div>
+                                            </div>
+                                            <button 
+                                                onClick={() => setIsTokenSelectorOpen(true)}
+                                                className="flex items-center gap-2 bg-zinc-950/50 border border-white/5 px-3 py-2 rounded-xl hover:border-white/10 transition-colors shrink-0 self-start"
+                                            >
+                                                <img src={USDC_ICON} className="w-5 h-5 object-contain" alt="USDC" />
+                                                <span className="font-bold text-white text-sm">USDC</span>
+                                                <ChevronDown size={12} className="text-zinc-600" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Recipient Address (New Feature) */}
+                                <div className="pt-4 mt-4 border-t border-white/5">
+                                    <div
+                                        className="flex items-center gap-2 cursor-pointer group"
+                                        onClick={() => setRecipientMode(!recipientMode)}
+                                    >
+                                        <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${recipientMode ? 'bg-emerald-500 border-emerald-500' : 'border-zinc-700 bg-zinc-900'}`}>
+                                            {recipientMode && <Check size={10} className="text-black stroke-[4px]" />}
+                                        </div>
+                                        <span className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-300 uppercase tracking-wide">Send to a different address</span>
+                                    </div>
+
+                                    {recipientMode && (
+                                        <div className="mt-3 animate-in fade-in slide-in-from-top-2">
+                                            <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest mb-1 block">Recipient Address</label>
+                                            <div className="relative">
+                                                <input
+                                                    type="text"
+                                                    placeholder="0x..."
+                                                    className="w-full bg-[#050505] border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-xs font-mono text-white focus:outline-none focus:border-emerald-500/50"
+                                                />
+                                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600">
+                                                    <User size={12} />
+                                                </div>
+                                                {/* Address validation check mock */}
+                                                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500">
+                                                    <ShieldCheck size={12} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
+                        {/* Lock Overlay */}
+                        {isReviewing && (
+                            <div className="absolute inset-0 flex items-center justify-center z-10 animate-in fade-in zoom-in-95 duration-300">
+                                <div className="bg-black/80 backdrop-blur-sm border border-white/10 p-3 rounded-full shadow-2xl">
+                                    <Lock size={20} className="text-zinc-400" />
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* NEW UNIFIED EXECUTION SIMULATION BLOCK */}
@@ -1529,12 +1565,11 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
                                 </span>
                             </div>
 
-                            {/* Row 6: Max Slippage */}
+                            {/* Row 6: Max Slippage (Refactored to match request) */}
                             <div className="flex justify-between items-center py-3 border-b border-dashed border-white/10 cursor-pointer group" onClick={openSettingsModal}>
                                 <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors">Max Slippage</span>
                                 <div className="flex items-center gap-1.5">
-                                    <span className="text-xs font-mono font-bold text-zinc-300">{slippage}% (Auto)</span>
-                                    <Settings size={10} className="text-zinc-600 group-hover:text-zinc-400" />
+                                    <span className="text-xs font-mono font-bold text-zinc-300 cursor-pointer underline decoration-dashed decoration-zinc-600 hover:text-white transition-colors">{slippage}% (Auto)</span>
                                 </div>
                             </div>
 
@@ -1548,30 +1583,48 @@ const ExecutionView: React.FC<ExecutionViewProps> = ({ initialState }) => {
                         </div>
                     </div>
 
-                    {/* CTA BUTTON */}
+                    {/* CTA BUTTON - UPDATED FOR INLINE CONFIRMATION */}
                     <div className="relative group mt-1">
-                        <button 
-                            disabled={numericPay <= 0 || isInsufficientBalance}
-                            className={`w-full h-14 rounded-xl font-black text-[11px] uppercase tracking-[0.1em] transition-all shadow-xl active:scale-[0.98] ${
-                                isInsufficientBalance || numericPay <= 0 
-                                    ? 'bg-zinc-800 text-zinc-400 cursor-not-allowed border border-white/5' 
-                                    : isHighImpact
-                                        ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-amber-500/20'
-                                        : 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-emerald-500/10' 
-                            }`}
-                        >
-                            {isInsufficientBalance 
-                                ? 'Insufficient Balance' 
-                                : numericPay <= 0 
-                                        ? 'Enter Amount' 
-                                        : isHighImpact 
-                                            ? 'SWAP WITH HIGH SLIPPAGE'
-                                            : 'Review Order'
-                            }
-                        </button>
+                        {!isReviewing ? (
+                            <button 
+                                onClick={() => setIsReviewing(true)}
+                                disabled={numericPay <= 0 || isInsufficientBalance}
+                                className={`w-full h-14 rounded-xl font-black text-[11px] uppercase tracking-[0.1em] transition-all shadow-xl active:scale-[0.98] ${
+                                    isInsufficientBalance || numericPay <= 0 
+                                        ? 'bg-zinc-800 text-zinc-400 cursor-not-allowed border border-white/5' 
+                                        : isHighImpact
+                                            ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-amber-500/20'
+                                            : 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-emerald-500/10' 
+                                }`}
+                            >
+                                {isInsufficientBalance 
+                                    ? 'Insufficient Balance' 
+                                    : numericPay <= 0 
+                                            ? 'Enter Amount' 
+                                            : isHighImpact 
+                                                ? 'SWAP WITH HIGH SLIPPAGE'
+                                                : 'SWAP'
+                                }
+                            </button>
+                        ) : (
+                            <div className="flex flex-col gap-2 animate-in fade-in zoom-in-95 duration-200">
+                                <button 
+                                    onClick={handleConfirmOrder}
+                                    className="w-full h-14 rounded-xl font-black text-[11px] uppercase tracking-[0.1em] bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-500/20 transition-all active:scale-[0.98] animate-pulse"
+                                >
+                                    CONFIRM SWAP ({reviewTimer}s)
+                                </button>
+                                <button 
+                                    onClick={() => setIsReviewing(false)}
+                                    className="w-full py-2 text-[10px] font-bold text-zinc-500 hover:text-zinc-300 uppercase tracking-widest transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        )}
                         
                         {/* Tooltip for High Impact */}
-                        {isHighImpact && (
+                        {isHighImpact && !isReviewing && (
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[200px] bg-black border border-amber-500/50 text-amber-500 text-[10px] font-bold p-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-center shadow-2xl z-50">
                                 Warning: You will lose an estimated <span className="text-white border-b border-amber-500/50">{simulation.swapImpactPct.toFixed(2)}%</span> due to price impact.
                                 <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-amber-500/50"></div>

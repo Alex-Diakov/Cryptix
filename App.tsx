@@ -10,14 +10,19 @@ import StrategyAutomationView from './components/StrategyAutomationView';
 import TeamSettingsView from './components/TeamSettingsView';
 import ActivityLogView from './components/ActivityLogView';
 import DesignSystemView from './components/DesignSystemView';
+import LiquidityManager from './components/LiquidityManager'; 
+import { SplashScreen } from './components/SplashScreen'; // Import SplashScreen
+import { NetworkSelector, NETWORKS, Network } from './components/NetworkSelector';
 import { Fuel, Bell, Search, ChevronDown, Wifi, Signal, Cpu, Wallet, Lock, ShieldAlert, FileText, LogOut, ShieldCheck, UserCog, MonitorOff } from 'lucide-react';
 
 const App: React.FC = () => {
+  const [loading, setLoading] = useState(true); // Loading state
   const [activeTab, setActiveTab] = useState('dashboard');
   const [address] = useState('0x71C...4f92');
   const [searchFocused, setSearchFocused] = useState(false);
   const [tradeConfig, setTradeConfig] = useState<any>(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [currentNetwork, setCurrentNetwork] = useState<Network>(NETWORKS[0]);
 
   // Keyboard shortcut listener for CMD+K search
   useEffect(() => {
@@ -47,7 +52,7 @@ const App: React.FC = () => {
       case 'pro-trade': return 'Trading Terminal';
       case 'history': return 'CFO Reporting Console';
       case 'dashboard': return 'Dashboard';
-      case 'earn': return 'Yield Optimization';
+      case 'earn': return 'Liquidity & Yield'; 
       case 'analytics': return 'AI Intelligence';
       case 'automation': return 'Strategy Automation';
       case 'settings': return 'Governance & Access Control';
@@ -83,6 +88,8 @@ const App: React.FC = () => {
             </div>
           </div>
         );
+      case 'earn': 
+        return <LiquidityManager />;
       case 'automation':
         return <StrategyAutomationView />;
       case 'settings':
@@ -103,8 +110,13 @@ const App: React.FC = () => {
     }
   };
 
+  // Render Splash Screen if loading
+  if (loading) {
+    return <SplashScreen onFinish={() => setLoading(false)} />;
+  }
+
   return (
-    <div className="flex h-screen w-screen bg-transparent text-gray-100 font-sans overflow-hidden selection:bg-emerald-500/30">
+    <div className="flex h-screen w-screen bg-transparent text-gray-100 font-sans overflow-hidden selection:bg-emerald-500/30 animate-in fade-in duration-700">
       
       {/* 1. NATIVE SIDEBAR (Left Edge) */}
       <Sidebar activeTab={activeTab} setActiveTab={navigateTo} />
@@ -154,11 +166,12 @@ const App: React.FC = () => {
             {/* Divider */}
             <div className="w-px h-6 bg-white/5 mx-2 hidden lg:block"></div>
 
-            {/* 2. Network Indicator (NEW FEATURE) */}
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-[#09090b] border border-white/10 rounded-xl mr-2 hover:border-indigo-500/30 transition-all cursor-pointer group shadow-sm">
-               <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]"></div>
-               <span className="text-[10px] font-bold text-zinc-200">Ethereum Mainnet</span>
-               <ChevronDown size={10} className="text-zinc-500 group-hover:text-white ml-1" />
+            {/* 2. Network Indicator (NEW COMPONENT) */}
+            <div className="hidden lg:block mr-2">
+               <NetworkSelector 
+                  selectedNetwork={currentNetwork} 
+                  onSelect={setCurrentNetwork} 
+               />
             </div>
 
             {/* Divider */}
@@ -292,15 +305,15 @@ const App: React.FC = () => {
         {/* C. STATUS BAR (Fixed Bottom) */}
         <footer className="h-8 bg-[#080808]/90 backdrop-blur border-t border-white/5 flex items-center justify-between px-4 shrink-0 z-50 select-none">
             
-            {/* Left: System Status */}
+            {/* Left: System Status (Dynamic based on Network) */}
             <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-2 text-[10px] font-mono text-zinc-500 hover:text-white transition-colors cursor-pointer">
-                    <Wifi size={12} className="text-emerald-500" />
-                    <span className="font-bold">Mainnet: Connected</span>
+                    <Wifi size={12} className={currentNetwork.status === 'Operational' ? "text-emerald-500" : "text-amber-500"} />
+                    <span className="font-bold">{currentNetwork.name}: Connected</span>
                 </div>
                 <div className="flex items-center space-x-2 text-[10px] font-mono text-zinc-500 hover:text-white transition-colors cursor-pointer">
                     <Signal size={12} className="text-emerald-500" />
-                    <span>RPC: 12ms</span>
+                    <span>RPC: {currentNetwork.latency}ms</span>
                 </div>
             </div>
 
@@ -310,15 +323,15 @@ const App: React.FC = () => {
                <span>Cryptix Core v4.0 (Enterprise)</span>
             </div>
 
-            {/* Right: Gas & Block */}
+            {/* Right: Gas & Block (Dynamic) */}
             <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-2 text-[10px] font-mono text-zinc-500 hover:text-white transition-colors cursor-pointer">
                     <Fuel size={12} />
-                    <span>Gas: <span className="text-emerald-500 font-bold">12 Gwei</span></span>
+                    <span>Gas: <span className="text-emerald-500 font-bold">{currentNetwork.gasPrice}</span></span>
                 </div>
                 <div className="flex items-center space-x-2 text-[10px] font-mono text-zinc-500">
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                    <span>Block: 19420421</span>
+                    <span>Block: {currentNetwork.blockHeight}</span>
                 </div>
             </div>
         </footer>
