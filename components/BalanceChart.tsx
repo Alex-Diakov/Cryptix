@@ -211,7 +211,7 @@ const BalanceChart: React.FC<BalanceChartProps> = ({ benchmarkMode = 'USD' }) =>
           dataKey="shortDate" 
           axisLine={false} 
           tickLine={false} 
-          tick={{ fill: '#52525b', fontSize: 10, fontWeight: 700, textTransform: 'uppercase' }}
+          tick={{ fill: '#52525b', fontSize: 10, fontWeight: 700, style: { textTransform: 'uppercase' } }}
           interval={4} 
           dy={10}
         />

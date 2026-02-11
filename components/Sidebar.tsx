@@ -49,11 +49,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
     { id: 'automation', label: 'Strategy Automation', icon: Workflow },
     { id: 'history', label: 'CFO Console', icon: FileText },
     { id: 'activity', label: 'Audit Log', icon: Shield },
-    { id: 'settings', label: 'Governance & Access Control', icon: Users },
   ];
 
   // Organization Level Settings
   const settingsOptions = [
+    { label: 'Governance & Access', icon: Users, desc: 'Team & Permissions', id: 'settings', color: 'text-blue-400' },
     { label: 'Risk Controls', icon: ShieldAlert, desc: 'Limits & Drawdown', color: 'text-amber-400' },
     { label: 'API Management', icon: Key, desc: 'Keys & Webhooks', color: 'text-blue-400' },
     { label: 'Custody & Vaults', icon: Building, desc: 'MPC Wallets', color: 'text-zinc-400' },
@@ -151,8 +151,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
                                     key={opt.label}
                                     onClick={() => {
                                         setIsSettingsOpen(false);
-                                        if (opt.id === 'design-system') {
-                                            setActiveTab('design-system');
+                                        if (opt.id) {
+                                            setActiveTab(opt.id);
                                         }
                                     }}
                                     className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors group text-left"

@@ -3,36 +3,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cryptix - Next Gen Crypto Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #050507;
             color: #ffffff;
             margin: 0;
+            padding: 0;
             overflow: hidden;
-        }
-        .font-mono {
-            font-family: 'JetBrains+Mono', monospace;
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1a1a1a;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2a2a2a;
+            -webkit-font-smoothing: antialiased;
         }
         
-        /* Nebula Background Mesh */
+        /* Critical CSS for Instant Loader */
+        #root {
+            width: 100vw;
+            height: 100vh; /* Fallback */
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #050507;
+            position: relative;
+        }
+
+        .pre-loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+            z-index: 10;
+            animation: loaderFadeIn 0.5s ease-out forwards;
+        }
+
+        .pre-loader-logo {
+            width: 6rem;
+            height: 6rem;
+            color: #10b981;
+            filter: drop-shadow(0 0 25px rgba(16,185,129,0.6));
+            animation: loaderPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .pre-loader-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 3.75rem; /* Matches text-6xl */
+            font-weight: 900;
+            color: white;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255,255,255,0.4);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .pre-loader-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(16,185,129,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        @keyframes loaderPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .7; transform: scale(0.95); }
+        }
+
+        @keyframes loaderFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2a2a2a; }
+        
+        /* Nebula Background Mesh (Kept for app usage) */
         .nebula-bg {
             position: fixed;
             inset: 0;
@@ -80,19 +131,6 @@
             0% { transform: translate(0, 0) scale(1); }
             100% { transform: translate(40px, 20px) scale(1.05); }
         }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-            display: flex;
-            width: max-content;
-            animation: marquee 30s linear infinite;
-        }
-        .animate-marquee:hover {
-            animation-play-state: paused;
-        }
     </style>
 <script type="importmap">
 {
@@ -114,7 +152,19 @@
         <div class="nebula-orb orb-navy"></div>
         <div class="nebula-orb orb-center"></div>
     </div>
-    <div id="root"></div>
+    
+    <!-- CRITICAL: Instant Loader Markup inside #root -->
+    <div id="root">
+        <div class="pre-loader-bg"></div>
+        <div class="pre-loader-content">
+            <!-- SVG Logo Exact Match -->
+            <svg viewBox="0 0 1016 1016" class="pre-loader-logo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M549.013 918.133C571.123 915.868 592.986 911.862 614.388 906.145C676.711 889.445 735.152 858.196 784.176 813.906L841.438 789.45L930.224 751.521L864.971 713.828C895.174 661.515 912.623 605.35 918.288 548.928H1015.12C1009.22 621.794 987.465 694.536 948.491 762.064C878.209 883.81 765.211 965.538 639.335 999.255C609.798 1007.18 579.564 1012.43 549.012 1014.96V918.133H549.013ZM96.924 548.929C99.188 571.029 103.195 592.892 108.91 614.295C125.611 676.618 156.859 735.058 201.149 784.103L225.606 841.354L263.534 930.161L301.227 864.898C353.53 895.101 409.706 912.529 466.158 918.194L466.127 1015.06C393.262 1009.12 320.509 987.402 252.992 948.398C131.245 878.115 49.517 765.118 15.8 639.242C7.86999 609.736 2.61396 579.481 0.0929565 548.929H96.924V548.929ZM273.145 742.26L187.676 752.537L245.522 710.951C218.228 675.747 198.536 635.678 187.205 593.333C165.229 511.339 174.551 420.965 220.318 341.655L285.603 379.348L274.045 283.451L272.796 273.082L262.52 187.585L304.106 245.43C339.298 218.136 379.379 198.475 421.723 187.113C436.303 183.23 451.148 180.289 466.126 178.405V275.9C459.601 277.088 453.094 278.543 446.67 280.254C388.527 295.827 336.337 333.602 303.838 389.86C271.339 446.148 264.752 510.244 280.315 568.386C295.909 626.529 333.673 678.719 389.951 711.218C446.209 743.685 510.304 750.304 568.447 734.741C626.59 719.137 678.801 681.382 711.299 625.105C725.335 600.792 734.505 575.036 739.187 548.93H836.734C831.395 591.531 817.625 633.814 794.799 673.34L729.546 635.647L741.072 731.513L742.321 741.881L752.628 827.379L711.011 769.524C675.808 796.827 635.738 816.519 593.394 827.841C511.41 849.828 421.025 840.504 341.716 794.737L379.409 729.453L283.543 741.01L273.173 742.26H273.145V742.26ZM653.567 507.476C653.567 426.855 588.192 361.489 507.571 361.489C426.928 361.489 361.553 426.855 361.553 507.476C361.553 588.128 426.928 653.504 507.571 653.504C588.191 653.504 653.567 588.128 653.567 507.476ZM66.658 252.928C136.942 131.182 249.939 49.4241 375.813 15.7061C405.341 7.78605 435.574 2.52 466.126 0V96.85C444.027 99.094 422.164 103.1 400.76 108.848C338.427 125.548 279.998 156.766 230.942 201.057L173.701 225.513L84.895 263.472L150.148 301.134C119.945 353.447 102.527 409.643 96.86 466.064H0C5.903 393.199 27.654 320.446 66.658 252.928Z" />
+            </svg>
+            <h1 class="pre-loader-title">CRYPTIX</h1>
+        </div>
+    </div>
+    
     <div id="portal-root"></div>
 </body>
 </html>

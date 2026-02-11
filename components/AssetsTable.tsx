@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { MOCK_ASSETS } from '../constants';
@@ -82,25 +81,35 @@ const PortalTooltip: React.FC<PortalTooltipProps> = ({ content, children, side =
 
 const TooltipContent = ({ rect, placement, content }: { rect: DOMRect, placement: string, content: string }) => {
     // Calculate precise position styles
-    let style: React.CSSProperties = {
+    const baseStyle: React.CSSProperties = {
         position: 'fixed',
         zIndex: 9999,
         maxWidth: '240px',
     };
 
+    let positionStyle: React.CSSProperties = {};
+
     if (placement === 'top') {
-        style.top = rect.top - 8; // Gap
-        style.left = rect.left + (rect.width / 2);
-        style.transform = 'translate(-50%, -100%)';
+        positionStyle = {
+            top: rect.top - 8,
+            left: rect.left + (rect.width / 2),
+            transform: 'translate(-50%, -100%)',
+        };
     } else if (placement === 'bottom') {
-        style.top = rect.bottom + 8; // Gap
-        style.left = rect.left + (rect.width / 2);
-        style.transform = 'translate(-50%, 0)';
+        positionStyle = {
+            top: rect.bottom + 8,
+            left: rect.left + (rect.width / 2),
+            transform: 'translate(-50%, 0)',
+        };
     } else if (placement === 'left') {
-        style.top = rect.top + (rect.height / 2);
-        style.left = rect.left - 8;
-        style.transform = 'translate(-100%, -50%)';
+        positionStyle = {
+            top: rect.top + (rect.height / 2),
+            left: rect.left - 8,
+            transform: 'translate(-100%, -50%)',
+        };
     }
+
+    const style = { ...baseStyle, ...positionStyle };
 
     return (
         <div style={style} className="pointer-events-none animate-in fade-in zoom-in-95 duration-150">

@@ -16,8 +16,17 @@ import { NetworkSelector, NETWORKS, Network } from './components/NetworkSelector
 import { Fuel, Bell, Search, ChevronDown, Wifi, Signal, Cpu, Wallet, Lock, ShieldAlert, FileText, LogOut, ShieldCheck, UserCog, MonitorOff } from 'lucide-react';
 
 const App: React.FC = () => {
-  const [loading, setLoading] = useState(true); // Loading state
-  const [activeTab, setActiveTab] = useState('dashboard');
+  // --- PERSISTENCE LOGIC ---
+  // Check sessionStorage for boot status to skip splash on refresh
+  const [loading, setLoading] = useState(() => {
+    return !sessionStorage.getItem('cryptix_booted');
+  });
+
+  // Check localStorage for last active tab
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem('cryptix_last_view') || 'dashboard';
+  });
+
   const [address] = useState('0x71C...4f92');
   const [searchFocused, setSearchFocused] = useState(false);
   const [tradeConfig, setTradeConfig] = useState<any>(null);
@@ -41,9 +50,26 @@ const App: React.FC = () => {
       setTradeConfig(config);
     }
     setActiveTab(tab);
+    localStorage.setItem('cryptix_last_view', tab); // Persist navigation state
     if (window.innerWidth < 768) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  const handleSplashFinish = () => {
+    sessionStorage.setItem('cryptix_booted', 'true');
+    setLoading(false);
+  };
+
+  const handleTerminateSession = () => {
+    // Clear persistence
+    sessionStorage.removeItem('cryptix_booted');
+    localStorage.removeItem('cryptix_last_view');
+    
+    // Reset State
+    setIsProfileOpen(false);
+    setActiveTab('dashboard');
+    setLoading(true); // Trigger Splash Screen re-mount
   };
 
   const getPageTitle = () => {
@@ -112,7 +138,7 @@ const App: React.FC = () => {
 
   // Render Splash Screen if loading
   if (loading) {
-    return <SplashScreen onFinish={() => setLoading(false)} />;
+    return <SplashScreen onFinish={handleSplashFinish} />;
   }
 
   return (
@@ -284,7 +310,10 @@ const App: React.FC = () => {
 
                             {/* Footer - Professional Terminology */}
                             <div className="p-2 border-t border-white/5 bg-zinc-900/30">
-                                <button className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-rose-500/5 text-rose-500 border border-rose-500/10 hover:bg-rose-500 hover:text-white transition-all text-[10px] font-black uppercase tracking-widest hover:shadow-[0_0_15px_rgba(244,63,94,0.4)] group">
+                                <button 
+                                    onClick={handleTerminateSession}
+                                    className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-rose-500/5 text-rose-500 border border-rose-500/10 hover:bg-rose-500 hover:text-white transition-all text-[10px] font-black uppercase tracking-widest hover:shadow-[0_0_15px_rgba(244,63,94,0.4)] group"
+                                >
                                     <LogOut size={12} className="group-hover:stroke-[3px]" /> 
                                     Terminate Session
                                 </button>

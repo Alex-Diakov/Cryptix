@@ -26,7 +26,23 @@ import {
   Command,
   Hash,
   LayoutList,
-  LayoutGrid
+  LayoutGrid,
+  Skull,
+  Timer,
+  AlertOctagon,
+  MousePointer2,
+  PenTool,
+  ChevronDown,
+  Search,
+  Bell,
+  Check,
+  Info,
+  AlertTriangle,
+  X,
+  Settings,
+  Lock,
+  Box,
+  Maximize
 } from 'lucide-react';
 
 const DesignSystemView: React.FC = () => {
@@ -41,9 +57,9 @@ const DesignSystemView: React.FC = () => {
                <LayoutTemplate className="text-zinc-400" size={24} />
             </div>
             <div>
-                <h1 className="text-3xl font-black text-white tracking-tight uppercase">Cryptix Design System <span className="text-emerald-500">v4.1</span></h1>
+                <h1 className="text-3xl font-black text-white tracking-tight uppercase">Cryptix Design System <span className="text-emerald-500">v4.3</span></h1>
                 <p className="text-zinc-500 text-xs font-mono mt-1 uppercase tracking-widest">
-                    Utility-First Architecture • Color Audit Complete
+                    Utility-First Architecture • Color Audit Complete • Critical Flows • Form Patterns
                 </p>
             </div>
           </div>
@@ -56,623 +72,569 @@ const DesignSystemView: React.FC = () => {
                     <Palette className="text-emerald-500" size={20} />
                     <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">01. Semantic Palette</h2>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-600">Contextual Color Application</span>
             </div>
-
-            {/* 1A: COLOR SYSTEM AUDIT */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                
-                {/* Primary */}
                 <div className="space-y-3 group">
-                    <div className="h-20 rounded-2xl bg-emerald-500 shadow-[0_0_30px_-5px_rgba(16,185,129,0.3)] border border-emerald-400/20 group-hover:scale-[1.02] transition-transform"></div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">Primary (Success)</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">emerald-500</p>
-                        <p className="text-zinc-600 text-[10px]">Buy, Long, Profit, Active</p>
-                    </div>
+                    <div className="h-20 rounded-2xl bg-emerald-500 shadow-[0_0_30px_-5px_rgba(16,185,129,0.3)] border border-emerald-400/20"></div>
+                    <div className="px-1 space-y-1"><p className="text-white text-xs font-bold uppercase">Primary (Success)</p><p className="text-zinc-500 text-[10px] font-mono">text-emerald-500</p></div>
                 </div>
-
-                {/* Secondary */}
                 <div className="space-y-3 group">
-                    <div className="h-20 rounded-2xl bg-purple-500 shadow-[0_0_30px_-5px_rgba(168,85,247,0.3)] border border-purple-400/20 group-hover:scale-[1.02] transition-transform"></div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">Secondary (AI)</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">purple-500</p>
-                        <p className="text-zinc-600 text-[10px]">Strategy, Admin, Bot</p>
-                    </div>
+                    <div className="h-20 rounded-2xl bg-purple-500 shadow-[0_0_30px_-5px_rgba(168,85,247,0.3)] border border-purple-400/20"></div>
+                    <div className="px-1 space-y-1"><p className="text-white text-xs font-bold uppercase">Secondary (AI)</p><p className="text-zinc-500 text-[10px] font-mono">text-purple-500</p></div>
                 </div>
-
-                {/* Destructive */}
                 <div className="space-y-3 group">
-                    <div className="h-20 rounded-2xl bg-rose-500 shadow-[0_0_30px_-5px_rgba(244,63,94,0.3)] border border-rose-400/20 group-hover:scale-[1.02] transition-transform"></div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">Destructive (Error)</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">rose-500</p>
-                        <p className="text-zinc-600 text-[10px]">Sell, Short, Loss, Stop</p>
-                    </div>
+                    <div className="h-20 rounded-2xl bg-rose-500 shadow-[0_0_30px_-5px_rgba(244,63,94,0.3)] border border-rose-400/20"></div>
+                    <div className="px-1 space-y-1"><p className="text-white text-xs font-bold uppercase">Destructive (Error)</p><p className="text-zinc-500 text-[10px] font-mono">text-rose-500</p></div>
                 </div>
-
-                {/* Warning */}
                 <div className="space-y-3 group">
-                    <div className="h-20 rounded-2xl bg-amber-500 shadow-[0_0_30px_-5px_rgba(245,158,11,0.3)] border border-amber-400/20 group-hover:scale-[1.02] transition-transform"></div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">Caution (Warning)</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">amber-500</p>
-                        <p className="text-zinc-600 text-[10px]">Pending, High Slippage</p>
-                    </div>
+                    <div className="h-20 rounded-2xl bg-amber-500 shadow-[0_0_30px_-5px_rgba(245,158,11,0.3)] border border-amber-400/20"></div>
+                    <div className="px-1 space-y-1"><p className="text-white text-xs font-bold uppercase">Caution (Warning)</p><p className="text-zinc-500 text-[10px] font-mono">text-amber-500</p></div>
                 </div>
-
-                {/* Info / Action */}
                 <div className="space-y-3 group">
-                    <div className="h-20 rounded-2xl bg-blue-500 shadow-[0_0_30px_-5px_rgba(59,130,246,0.3)] border border-blue-400/20 group-hover:scale-[1.02] transition-transform"></div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">Info (Action)</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">blue-500</p>
-                        <p className="text-zinc-600 text-[10px]">Links, Stablecoins, Bridge</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        {/* SECTION 2: BASE LAYERS (AUDITED) */}
-        <section className="space-y-8">
-            <div className="flex items-end justify-between border-b border-white/5 pb-2">
-                <div className="flex items-center gap-2">
-                    <Layers className="text-zinc-500" size={20} />
-                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">02. Base Layers</h2>
-                </div>
-                <span className="text-[10px] font-mono text-zinc-600">Monochromatic Depth</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                {/* L0 Canvas */}
-                <div className="space-y-3 group">
-                    <div className="h-28 rounded-2xl bg-[#050505] border border-white/5 group-hover:scale-[1.02] transition-transform flex items-center justify-center relative overflow-hidden">
-                        <span className="text-zinc-800 font-black text-4xl opacity-50 select-none">L0</span>
-                    </div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">L0 Canvas</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">#050505</p>
-                        <p className="text-zinc-600 text-[10px]">App background & negative space.</p>
-                    </div>
-                </div>
-
-                {/* L1 Surface */}
-                <div className="space-y-3 group">
-                    <div className="h-28 rounded-2xl bg-[#09090b] border border-white/5 group-hover:scale-[1.02] transition-transform flex items-center justify-center relative overflow-hidden shadow-2xl">
-                        <span className="text-zinc-700 font-black text-4xl opacity-50 select-none">L1</span>
-                    </div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">L1 Surface</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">#09090B</p>
-                        <p className="text-zinc-600 text-[10px]">Sidebar, Card containers.</p>
-                    </div>
-                </div>
-
-                {/* L2 Component */}
-                <div className="space-y-3 group">
-                    <div className="h-28 rounded-2xl bg-[#18181B] border border-white/10 group-hover:scale-[1.02] transition-transform flex items-center justify-center relative overflow-hidden shadow-inner">
-                        <span className="text-zinc-600 font-black text-4xl opacity-50 select-none">L2</span>
-                    </div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">L2 Component</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">#18181B</p>
-                        <p className="text-zinc-600 text-[10px]">Hover states, Nested modules.</p>
-                    </div>
-                </div>
-
-                {/* L3 Overlay/Stroke */}
-                <div className="space-y-3 group">
-                    <div className="h-28 rounded-2xl bg-[#27272A] border border-white/10 group-hover:scale-[1.02] transition-transform flex items-center justify-center relative overflow-hidden shadow-inner">
-                        <span className="text-zinc-500 font-black text-4xl opacity-50 select-none">L3</span>
-                    </div>
-                    <div className="px-1 space-y-1">
-                        <p className="text-white text-xs font-bold uppercase tracking-wide">L3 Stroke</p>
-                        <p className="text-zinc-500 text-[10px] font-mono">#27272A</p>
-                        <p className="text-zinc-600 text-[10px]">Borders, Dividers, Inputs.</p>
-                    </div>
+                    <div className="h-20 rounded-2xl bg-blue-500 shadow-[0_0_30px_-5px_rgba(59,130,246,0.3)] border border-blue-400/20"></div>
+                    <div className="px-1 space-y-1"><p className="text-white text-xs font-bold uppercase">Info (Action)</p><p className="text-zinc-500 text-[10px] font-mono">text-blue-500</p></div>
                 </div>
             </div>
         </section>
 
-        {/* SECTION 3: TYPOGRAPHY (Was 2) */}
+        {/* SECTION 2: TYPOGRAPHY */}
         <section className="space-y-8">
             <div className="flex items-end justify-between border-b border-white/5 pb-2">
                 <div className="flex items-center gap-2">
                     <Type className="text-blue-500" size={20} />
-                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">03. Data-First Typography</h2>
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">02. Typography</h2>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-600">Dual-Font System</span>
+                <span className="text-[10px] font-mono text-zinc-600">Inter (UI) & JetBrains Mono (Data)</span>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-zinc-900/20 rounded-[2rem] p-8 border border-white/5">
-                {/* INTER */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div className="space-y-6">
-                    <div className="flex justify-between items-center pb-4 border-b border-white/5">
-                        <span className="text-white font-sans text-2xl font-bold">Aa</span>
-                        <div className="text-right">
-                            <p className="text-zinc-300 font-bold text-sm">Inter</p>
-                            <p className="text-zinc-500 text-[10px] uppercase tracking-wider">Human Interface</p>
-                        </div>
+                    <div className="space-y-2">
+                        <h1 className="text-5xl font-black text-white tracking-tight">Display Hero</h1>
+                        <p className="text-[10px] font-mono text-zinc-500">text-5xl font-black tracking-tight</p>
                     </div>
-                    <div className="space-y-4">
-                        <div>
-                            <p className="text-zinc-600 text-[10px] mb-1 font-mono uppercase">Heading 1 / Display</p>
-                            <h1 className="text-3xl font-black text-white tracking-tight">Strategy Automation</h1>
-                        </div>
-                        <div>
-                            <p className="text-zinc-600 text-[10px] mb-1 font-mono uppercase">UI Label / Caption</p>
-                            <p className="text-zinc-400 text-xs font-medium uppercase tracking-widest">
-                                Institutional Grade Execution
-                            </p>
-                        </div>
-                        <div className="p-4 bg-zinc-900/50 rounded-lg border border-white/5">
-                            <p className="text-zinc-300 text-sm leading-relaxed">
-                                "Used for narrative text, navigation, and labels. Optimized for screen legibility at small sizes."
-                            </p>
-                        </div>
+                    <div className="space-y-2">
+                        <h2 className="text-3xl font-bold text-white tracking-tight">Section Heading</h2>
+                        <p className="text-[10px] font-mono text-zinc-500">text-3xl font-bold tracking-tight</p>
+                    </div>
+                    <div className="space-y-2">
+                        <h3 className="text-xl font-semibold text-white">Card Title</h3>
+                        <p className="text-[10px] font-mono text-zinc-500">text-xl font-semibold</p>
+                    </div>
+                    <div className="space-y-2">
+                        <p className="text-sm text-zinc-400 leading-relaxed">
+                            Body text is typically <span className="text-white">zinc-400</span> for readability on dark backgrounds. 
+                            Active states use <span className="text-white">white</span>. We prioritize legibility and contrast.
+                        </p>
+                        <p className="text-[10px] font-mono text-zinc-500">text-sm text-zinc-400</p>
                     </div>
                 </div>
-
-                {/* JETBRAINS MONO */}
-                <div className="space-y-6 border-l border-white/5 pl-12 md:pl-8">
-                    <div className="flex justify-between items-center pb-4 border-b border-white/5">
-                        <span className="text-white font-mono text-2xl font-bold">01</span>
-                        <div className="text-right">
-                            <p className="text-zinc-300 font-mono font-bold text-sm">JetBrains Mono</p>
-                            <p className="text-zinc-500 text-[10px] uppercase tracking-wider">Machine Data</p>
-                        </div>
-                    </div>
-                    <div className="space-y-4">
+                <div className="space-y-6">
+                    <div className="bg-zinc-900/50 p-6 rounded-xl border border-white/5 space-y-4">
                         <div>
-                            <p className="text-zinc-600 text-[10px] mb-1 font-mono uppercase">Financial Data</p>
-                            <div className="font-mono text-2xl font-bold text-white tracking-tight">
-                                $1,240.50 <span className="text-emerald-500 text-lg">+12.4%</span>
-                            </div>
+                            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Financial Data</span>
+                            <div className="text-4xl font-mono font-medium text-white mt-1">$1,240,500.00</div>
                         </div>
                         <div>
-                            <p className="text-zinc-600 text-[10px] mb-1 font-mono uppercase">Hash / Address</p>
-                            <div className="font-mono text-xs text-zinc-400 bg-black/40 p-2 rounded border border-white/10 w-fit">
-                                0x71C...4f92
-                            </div>
+                            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Positive Change</span>
+                            <div className="text-xl font-mono font-bold text-emerald-500 mt-1">+12.45%</div>
                         </div>
-                        <div className="p-4 bg-zinc-900/50 rounded-lg border border-white/5">
-                             <p className="text-zinc-300 text-sm font-mono leading-relaxed">
-                                "Ensures tabular alignment. Every digit has equal width. Critical for financial accuracy."
-                            </p>
+                        <div>
+                            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Negative Change</span>
+                            <div className="text-xl font-mono font-bold text-rose-500 mt-1">-3.82%</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        {/* SECTION 4: COMPONENTS (BUTTONS) (Was 3) */}
+        {/* SECTION 3: BUTTONS */}
         <section className="space-y-8">
             <div className="flex items-end justify-between border-b border-white/5 pb-2">
                 <div className="flex items-center gap-2">
                     <MousePointerClick className="text-purple-500" size={20} />
-                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">04. Button Anatomy</h2>
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">03. Actions & Inputs</h2>
                 </div>
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                {/* Default */}
-                <div className="space-y-3 text-center">
-                    <button className="w-full py-3 bg-emerald-500 text-black rounded-xl font-black text-[10px] uppercase tracking-[0.1em] shadow-lg shadow-emerald-500/10">
-                        Confirm
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="space-y-4">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Primary Actions</h3>
+                    <button className="w-full py-4 bg-emerald-500 text-black rounded-xl font-black text-xs uppercase tracking-[0.1em] hover:bg-emerald-400 transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                        Confirm Transaction
                     </button>
-                    <p className="text-[10px] text-zinc-500 font-mono">State: Default</p>
+                    <button className="w-full py-3 bg-white text-black rounded-lg font-bold text-[10px] uppercase tracking-wider hover:bg-zinc-200 transition-all">
+                        Connect Wallet
+                    </button>
                 </div>
-                {/* Hover */}
-                <div className="space-y-3 text-center">
-                    <button className="w-full py-3 bg-emerald-400 text-black rounded-xl font-black text-[10px] uppercase tracking-[0.1em] shadow-lg shadow-emerald-500/30">
-                        Confirm
+                <div className="space-y-4">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Secondary & Outline</h3>
+                    <button className="w-full py-4 bg-zinc-800 text-white rounded-xl font-bold text-xs uppercase tracking-[0.1em] hover:bg-zinc-700 border border-white/5 transition-all">
+                        Cancel Order
                     </button>
-                    <p className="text-[10px] text-zinc-500 font-mono">State: Hover</p>
+                    <button className="w-full py-3 bg-transparent text-emerald-500 border border-emerald-500/50 rounded-lg font-bold text-[10px] uppercase tracking-wider hover:bg-emerald-500/10 transition-all">
+                        View Details
+                    </button>
                 </div>
-                {/* Active */}
-                <div className="space-y-3 text-center">
-                    <button className="w-full py-3 bg-emerald-600 text-black rounded-xl font-black text-[10px] uppercase tracking-[0.1em] scale-95 transform ring-2 ring-emerald-500/50">
-                        Confirm
+                <div className="space-y-4">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Destructive & Ghost</h3>
+                    <button className="w-full py-4 bg-rose-500/10 text-rose-500 border border-rose-500/20 rounded-xl font-black text-xs uppercase tracking-[0.1em] hover:bg-rose-500 hover:text-white transition-all">
+                        Liquidate Position
                     </button>
-                    <p className="text-[10px] text-zinc-500 font-mono">State: Active</p>
-                </div>
-                {/* Loading */}
-                <div className="space-y-3 text-center">
-                    <button className="w-full py-3 bg-emerald-500/80 text-black rounded-xl font-black text-[10px] uppercase tracking-[0.1em] flex items-center justify-center gap-2 cursor-wait">
-                        <Loader2 size={12} className="animate-spin" /> Processing
+                    <button className="w-full py-3 text-zinc-500 hover:text-white font-bold text-[10px] uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                        <Settings size={14} /> Advanced Settings
                     </button>
-                    <p className="text-[10px] text-zinc-500 font-mono">State: Loading</p>
-                </div>
-                {/* Disabled */}
-                <div className="space-y-3 text-center">
-                    <button disabled className="w-full py-3 bg-zinc-800 text-zinc-600 border border-white/5 rounded-xl font-black text-[10px] uppercase tracking-[0.1em] cursor-not-allowed">
-                        Insufficient
-                    </button>
-                    <p className="text-[10px] text-zinc-500 font-mono">State: Disabled</p>
-                </div>
-                {/* Warning */}
-                <div className="space-y-3 text-center">
-                    <button className="w-full py-3 bg-amber-500 text-black rounded-xl font-black text-[10px] uppercase tracking-[0.1em] shadow-lg shadow-amber-500/20 hover:bg-amber-400">
-                        High Slippage
-                    </button>
-                    <p className="text-[10px] text-zinc-500 font-mono">State: Warning</p>
                 </div>
             </div>
         </section>
 
-        {/* SECTION 5: PATTERNS (Was 4) */}
+        {/* SECTION 4: BADGES & TAGS */}
         <section className="space-y-8">
             <div className="flex items-end justify-between border-b border-white/5 pb-2">
                 <div className="flex items-center gap-2">
                     <Shield className="text-amber-500" size={20} />
-                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">05. Governance Patterns</h2>
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">04. Status Indicators</h2>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-600">B2B Components</span>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                
-                {/* 3A: Role & Limits */}
-                <div className="bg-zinc-900/40 p-8 rounded-[2rem] border border-white/5 space-y-8">
-                    <div>
-                        <h3 className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-4">Identity & RBAC</h3>
-                        <div className="flex flex-wrap gap-4">
-                            <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/20 shadow-[0_0_10px_rgba(168,85,247,0.1)]">
-                                [ Admin ]
-                            </span>
-                            <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                                [ Senior Trader ]
-                            </span>
-                            <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider bg-zinc-800 text-zinc-500 border border-zinc-700">
-                                [ Observer ]
-                            </span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-4">Spend Authority</h3>
-                        <div className="flex items-center gap-8">
-                            <div className="flex flex-col gap-1">
-                                <span className="text-xl font-mono font-bold text-white tracking-tight">$1,000,000</span>
-                                <span className="text-[9px] font-black text-zinc-600 uppercase tracking-widest">Daily Limit</span>
-                            </div>
-                            <div className="h-8 w-px bg-white/10"></div>
-                            <div className="flex flex-col gap-1">
-                                <span className="text-sm font-black text-purple-400 uppercase tracking-widest shadow-purple-500/20 text-shadow-glow py-1">UNLIMITED</span>
-                                <span className="text-[9px] font-black text-zinc-600 uppercase tracking-widest">Admin Access</span>
-                            </div>
-                        </div>
-                    </div>
+            <div className="flex flex-wrap gap-4">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[10px] font-black uppercase tracking-wider">
+                    <CheckCircle size={12} /> Active
                 </div>
-
-                {/* 3B: Audit Log Row */}
-                <div className="bg-zinc-900/40 p-8 rounded-[2rem] border border-white/5 space-y-6">
-                    <h3 className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2">Immutable Audit Trail</h3>
-                    
-                    <div className="space-y-3">
-                        <div className="flex items-center justify-between p-4 bg-zinc-900 border border-white/5 rounded-xl hover:bg-zinc-800 transition-colors cursor-default group">
-                            <div className="flex items-center gap-4">
-                                <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-500 border border-emerald-500/20 group-hover:bg-emerald-500/20">
-                                    <ShieldCheck size={16} />
-                                </div>
-                                <div>
-                                    <div className="flex items-center gap-2 mb-0.5">
-                                        <p className="text-xs font-black text-white uppercase tracking-wide">POLICY UPDATE</p>
-                                        <span className="text-[8px] font-mono text-zinc-600 px-1 border border-zinc-800 rounded">0x8a...2b</span>
-                                    </div>
-                                    <p className="text-[10px] font-medium text-zinc-500">Enforced 2FA for Junior Traders</p>
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-[10px] font-bold text-zinc-300">Alex M.</p>
-                                <p className="text-[9px] font-bold text-zinc-600 uppercase tracking-wider">2m ago</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center justify-between p-4 bg-zinc-900/50 border border-white/5 rounded-xl opacity-60">
-                            <div className="flex items-center gap-4">
-                                <div className="p-2 bg-rose-500/10 rounded-lg text-rose-500 border border-rose-500/20">
-                                    <Ban size={16} />
-                                </div>
-                                <div>
-                                    <p className="text-xs font-black text-white uppercase tracking-wide mb-0.5">ACCESS DENIED</p>
-                                    <p className="text-[10px] font-medium text-zinc-500">Failed Login Attempt (Russia)</p>
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-[10px] font-bold text-zinc-300">System</p>
-                                <p className="text-[9px] font-bold text-zinc-600 uppercase tracking-wider">1h ago</p>
-                            </div>
-                        </div>
-                    </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-black uppercase tracking-wider">
+                    <Timer size={12} /> Pending
                 </div>
-
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-rose-500/10 text-rose-500 border border-rose-500/20 text-[10px] font-black uppercase tracking-wider">
+                    <XCircle size={12} /> Failed
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-zinc-800 text-zinc-400 border border-zinc-700 text-[10px] font-black uppercase tracking-wider">
+                    <Ban size={12} /> Revoked
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[10px] font-black uppercase tracking-wider">
+                    <Bot size={12} /> Automated
+                </div>
             </div>
         </section>
 
-        {/* SECTION 6: SPACING & GRID */}
-        <section className="space-y-8">
+        {/* SECTION 5: SURFACES & CARDS (DETAILED & REFACTORED) */}
+        <section className="space-y-12">
             <div className="flex items-end justify-between border-b border-white/5 pb-2">
                 <div className="flex items-center gap-2">
-                    <Grid className="text-blue-400" size={20} />
-                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">06. Spacing & Layout Grid</h2>
+                    <Layers className="text-zinc-200" size={20} />
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">05. Surfaces Hierarchy</h2>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-600">Spatial System Architecture</span>
+                <span className="text-[10px] font-mono text-zinc-600">Depth & Materials</span>
             </div>
 
+            {/* LEVEL 1: BASE CONTAINERS */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                
-                {/* 6A: SPATIAL SCALE */}
-                <div className="bg-zinc-900/40 p-8 rounded-[2rem] border border-white/5 space-y-6">
-                    <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Base Unit: 4px</h3>
-                        <span className="text-[9px] font-mono text-zinc-600">rem-based scaling</span>
+                <div className="space-y-4">
+                    {/* UPDATED: 使用 Glass Panel Component */}
+                    <div className="glass-panel p-8 min-h-[240px] flex flex-col group">
+                        <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <Box size={100} />
+                        </div>
+                        <h3 className="text-sm font-bold text-white mb-2 relative z-10">Level 1: The Glass Panel</h3>
+                        <p className="text-xs text-zinc-400 leading-relaxed max-w-sm relative z-10">
+                            The primary container for major application sections (Dashboard, Trade). 
+                            Uses specific tokens for border radius (5xl), blur, and border opacity.
+                        </p>
+                        <div className="mt-auto pt-6 relative z-10">
+                            <code className="text-[9px] bg-black/50 px-2 py-1 rounded text-zinc-500 font-mono">
+                                .glass-panel (Reusable Component)
+                            </code>
+                        </div>
                     </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="bg-[#09090b] border border-white/10 rounded-2xl p-6 shadow-xl min-h-[240px] flex flex-col">
+                        <h3 className="text-sm font-bold text-white mb-2">Level 1.5: The Modal / Panel</h3>
+                        <p className="text-xs text-zinc-400 leading-relaxed max-w-sm">
+                            Used for floating elements like drawers, modals, or dropdowns. 
+                            Opaque background to prevent visual noise from layers behind it.
+                        </p>
+                        <div className="mt-auto pt-6">
+                            <code className="text-[9px] bg-zinc-900 px-2 py-1 rounded text-zinc-500 font-mono">
+                                bg-[#09090b] • border-white/10 • rounded-2xl • shadow-2xl
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* LEVEL 2 & 3: NESTING & INTERACTION */}
+            <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] p-10 backdrop-blur-md">
+                <div className="mb-8">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-2">Internal Composition Rules</h3>
+                    <p className="text-xs text-zinc-400">How to nest content within a Level 1 container.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* RULE: INSET GROUPING */}
+                    <div className="space-y-4">
+                        <div className="bg-zinc-900/30 border border-white/5 rounded-xl p-4">
+                            <div className="flex justify-between items-center mb-4">
+                                <span className="text-[10px] font-bold text-zinc-500 uppercase">Level 2: Grouping</span>
+                                <Maximize size={14} className="text-zinc-600" />
+                            </div>
+                            {/* Inner Content */}
+                            <div className="bg-black/20 border border-white/5 rounded-lg p-3">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded-full bg-zinc-800 border border-white/5"></div>
+                                    <div className="space-y-1">
+                                        <div className="w-24 h-2 bg-zinc-800 rounded"></div>
+                                        <div className="w-16 h-2 bg-zinc-800/50 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="text-[10px] text-zinc-500">
+                            <strong className="text-zinc-300">Inset Grouping:</strong> Use <code className="text-zinc-400">bg-black/20</code> or <code className="text-zinc-400">bg-zinc-900/50</code> to group related data points.
+                        </p>
+                    </div>
+
+                    {/* RULE: INTERACTIVE ITEMS */}
+                    <div className="space-y-4">
+                        <div className="flex flex-col gap-2">
+                            {/* Item 1 */}
+                            <div className="flex items-center justify-between p-3 rounded-lg border border-transparent hover:bg-zinc-800 hover:border-white/5 transition-all cursor-pointer group">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded bg-emerald-500/10 text-emerald-500 flex items-center justify-center border border-emerald-500/20">
+                                        <MousePointer2 size={14} />
+                                    </div>
+                                    <span className="text-xs font-bold text-zinc-400 group-hover:text-white transition-colors">Interactive Item</span>
+                                </div>
+                                <ArrowLeftRight size={14} className="text-zinc-600 group-hover:text-zinc-400" />
+                            </div>
+                            {/* Item 2 (Active) */}
+                            <div className="flex items-center justify-between p-3 rounded-lg border bg-zinc-800 border-white/10 cursor-default">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded bg-white text-black flex items-center justify-center font-bold">
+                                        <Check size={14} strokeWidth={4} />
+                                    </div>
+                                    <span className="text-xs font-bold text-white">Selected / Active</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="text-[10px] text-zinc-500">
+                            <strong className="text-zinc-300">Level 3 (Interactive):</strong> Use transparent backgrounds by default. On hover, apply <code className="text-zinc-400">bg-zinc-800</code>. Active states use solid fills.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* LEVEL 4: COMPLEX FUNCTIONAL SURFACE (TRADING PATTERN) */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div className="space-y-4">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Level 4: Complex Functional (Trading)</h3>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                        High-density functional surfaces require strict contrast management. Active states use brand colors (Emerald/Rose) to denote directionality (Long/Short).
+                    </p>
                     
-                    <div className="space-y-3">
-                        {[
-                            { name: 'space-1', val: '4px', usage: 'Tight grouping (Icon + Text)' },
-                            { name: 'space-2', val: '8px', usage: 'Component internal padding' },
-                            { name: 'space-3', val: '12px', usage: 'Related elements gap' },
-                            { name: 'space-4', val: '16px', usage: 'Standard padding / Card gap' },
-                            { name: 'space-6', val: '24px', usage: 'Section separation' },
-                            { name: 'space-8', val: '32px', usage: 'Container padding' },
-                            { name: 'space-12', val: '48px', usage: 'Major layout blocks' },
-                        ].map((token) => (
-                            <div key={token.name} className="flex items-center gap-4 group">
-                                <div className="w-12 text-right">
-                                    <span className="text-[10px] font-mono font-bold text-zinc-400">{token.val}</span>
+                    {/* ATOMIC COMPONENT: TRADING WIDGET */}
+                    <div className="bg-[#0f0f0f] border border-zinc-800 rounded-xl overflow-hidden w-full max-w-sm shadow-2xl">
+                        {/* TABS */}
+                        <div className="flex bg-[#0a0a0a] border-b border-zinc-800">
+                            <div className="flex-1 py-3 text-[10px] font-black uppercase tracking-widest text-emerald-500 bg-zinc-900 text-center relative cursor-default">
+                                Long / Buy
+                                <div className="absolute top-0 left-0 right-0 h-0.5 bg-emerald-500"></div>
+                            </div>
+                            <div className="flex-1 py-3 text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-zinc-300 text-center cursor-default">
+                                Short / Sell
+                            </div>
+                        </div>
+
+                        <div className="p-4 space-y-4">
+                            {/* Order Type */}
+                            <div className="flex justify-between items-center">
+                                <div className="bg-black border border-white/5 rounded-lg p-0.5 flex">
+                                    <div className="px-3 py-1.5 rounded-md text-[9px] font-bold uppercase bg-zinc-800 text-white shadow-sm">Market</div>
+                                    <div className="px-3 py-1.5 rounded-md text-[9px] font-bold uppercase text-zinc-500">Limit</div>
                                 </div>
-                                {/* Visual Bar */}
-                                <div className="flex-1 flex items-center">
-                                    <div 
-                                        className="h-4 bg-emerald-500/20 border border-emerald-500/30 rounded-sm relative group-hover:bg-emerald-500/40 transition-colors"
-                                        style={{ width: token.val }}
-                                    ></div>
-                                    <div className="ml-4 border-l border-zinc-800 pl-4 h-4 flex items-center">
-                                        <span className="text-[9px] text-zinc-600 uppercase tracking-wide group-hover:text-zinc-400 transition-colors">{token.usage}</span>
+                                <span className="text-[9px] font-bold text-zinc-500">Isolated 10x</span>
+                            </div>
+
+                            {/* Inputs */}
+                            <div className="space-y-2">
+                                <div className="bg-[#050505] border border-white/10 rounded-xl p-3 space-y-1">
+                                    <div className="flex justify-between text-[9px] font-bold text-zinc-500 uppercase">
+                                        <span>Collateral</span>
+                                        <span>Bal: 2,450.00</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex items-center gap-1.5 bg-zinc-900 px-2 py-1 rounded-lg border border-white/5">
+                                            <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                            <span className="text-[10px] font-bold text-white">USDT</span>
+                                        </div>
+                                        <span className="text-sm font-mono font-bold text-white">1,000.00</span>
                                     </div>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                </div>
 
-                {/* 6B: THE 12-COLUMN GRID */}
-                <div className="bg-zinc-900/40 p-8 rounded-[2rem] border border-white/5 space-y-6 flex flex-col">
-                    <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">12-Column Fluid Grid</h3>
-                        <span className="text-[9px] font-mono text-zinc-600">Gutter: 24px (1.5rem)</span>
-                    </div>
-
-                    <div className="flex-1 bg-black/40 rounded-xl border border-white/5 p-4 relative overflow-hidden">
-                        {/* Mock Content Overlay */}
-                        <div className="absolute inset-0 z-0 grid grid-cols-12 gap-4 p-4 pointer-events-none opacity-20">
-                            {Array.from({ length: 12 }).map((_, i) => (
-                                <div key={i} className="bg-rose-500/50 h-full rounded-sm"></div>
-                            ))}
-                        </div>
-
-                        {/* Layout Example */}
-                        <div className="relative z-10 h-full flex flex-col gap-4 text-[9px] font-black text-white/50 uppercase tracking-widest text-center">
-                            <div className="grid grid-cols-12 gap-4">
-                                <div className="col-span-12 bg-zinc-800/80 border border-white/10 h-12 rounded flex items-center justify-center">Header (col-12)</div>
-                            </div>
-                            <div className="grid grid-cols-12 gap-4 flex-1">
-                                <div className="col-span-3 bg-zinc-800/80 border border-white/10 rounded flex items-center justify-center">Nav (3)</div>
-                                <div className="col-span-9 flex flex-col gap-4">
-                                    <div className="flex-1 bg-zinc-800/80 border border-white/10 rounded flex items-center justify-center">Main (9)</div>
-                                    <div className="h-24 grid grid-cols-2 gap-4">
-                                        <div className="bg-zinc-800/50 border border-white/5 rounded flex items-center justify-center">Widget (4.5)</div>
-                                        <div className="bg-zinc-800/50 border border-white/5 rounded flex items-center justify-center">Widget (4.5)</div>
-                                    </div>
+                            {/* Leverage Slider Atomic */}
+                            <div className="bg-zinc-900/30 rounded-xl p-3 border border-white/5 space-y-3">
+                                <div className="flex justify-between items-center text-[10px]">
+                                    <span className="font-bold text-zinc-500">Leverage</span>
+                                    <span className="font-mono font-black text-white">20x</span>
+                                </div>
+                                <div className="relative h-1.5 w-full bg-zinc-800 rounded-full">
+                                    <div className="absolute top-0 left-0 h-full w-[20%] bg-emerald-500 rounded-full"></div>
+                                    <div className="absolute top-1/2 left-[20%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg border-2 border-zinc-900"></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-        </section>
-
-        {/* SECTION 7: ICONOGRAPHY */}
-        <section className="space-y-8">
-            <div className="flex items-end justify-between border-b border-white/5 pb-2">
-                <div className="flex items-center gap-2">
-                    <Star className="text-purple-500" size={20} />
-                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">07. Iconography</h2>
-                </div>
-                <span className="text-[10px] font-mono text-zinc-600">Lucide React • 1.5px Stroke</span>
-            </div>
-
-            <div className="bg-zinc-900/40 p-8 rounded-[2rem] border border-white/5">
-                <div className="grid grid-cols-4 md:grid-cols-8 gap-6">
-                    {[Bot, Shield, ArrowLeftRight, BarChart2, Zap, Activity, Globe, Cpu, Layers, Wifi, Server, Command, Hash, ShieldCheck, Ban, Loader2].map((Icon, i) => (
-                        <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
-                            <div className="p-3 bg-zinc-900 rounded-xl border border-white/5 text-zinc-400 group-hover:text-white group-hover:border-white/20 transition-all hover:scale-110">
-                                <Icon size={24} strokeWidth={1.5} />
+                            {/* CTA */}
+                            <div className="w-full py-3 bg-emerald-500 text-black rounded-xl font-black text-[10px] uppercase tracking-widest text-center shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                                Open Long
                             </div>
                         </div>
-                    ))}
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Anatomy</h3>
+                    <ul className="space-y-3">
+                        <li className="flex gap-3 text-xs text-zinc-400">
+                            <span className="text-emerald-500 font-bold">01.</span>
+                            <span><strong>Directional Context:</strong> Top border and active text color (Emerald/Rose) immediately signal trade direction.</span>
+                        </li>
+                        <li className="flex gap-3 text-xs text-zinc-400">
+                            <span className="text-emerald-500 font-bold">02.</span>
+                            <span><strong>Input Surface:</strong> Uses <code>bg-[#050505]</code> (darker than container) to create depth for input fields.</span>
+                        </li>
+                        <li className="flex gap-3 text-xs text-zinc-400">
+                            <span className="text-emerald-500 font-bold">03.</span>
+                            <span><strong>Primary Action:</strong> Full-width, high-contrast button matching the directional context color.</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        {/* SECTION 8: GUIDELINES */}
+        {/* SECTION 6: FORM ELEMENTS */}
         <section className="space-y-8">
             <div className="flex items-end justify-between border-b border-white/5 pb-2">
                 <div className="flex items-center gap-2">
-                    <CheckCircle className="text-emerald-500" size={20} />
-                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">08. Usage Guidelines</h2>
+                    <Command className="text-zinc-400" size={20} />
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">06. Simple Inputs</h2>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-600">Accessibility & Clarity</span>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* DO */}
-                <div className="bg-zinc-900/40 p-6 rounded-[2rem] border border-emerald-500/20 relative overflow-hidden group">
-                    <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[9px] font-black uppercase tracking-wider">
-                        <CheckCircle size={10} /> DO
-                    </div>
-                    <div className="h-24 flex items-center justify-center">
-                        <button className="px-6 py-2.5 bg-emerald-500 text-black rounded-lg font-bold text-xs uppercase tracking-wide shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                            Confirm Action
-                        </button>
-                    </div>
-                    <div className="mt-2">
-                        <p className="text-[10px] font-bold text-white">High Contrast</p>
-                        <p className="text-[10px] text-zinc-500 mt-1">
-                            "Use dark text (Zinc-950) on bright backgrounds (Emerald-500) to ensure readability."
-                        </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Text Input</label>
+                    <input type="text" placeholder="Enter value..." className="w-full bg-zinc-900 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-emerald-500/50 transition-colors" />
+                </div>
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Search Input</label>
+                    <div className="relative">
+                        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+                        <input type="text" placeholder="Search..." className="w-full bg-zinc-900 border border-white/10 rounded-lg py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-emerald-500/50 transition-colors" />
                     </div>
                 </div>
-
-                {/* DON'T */}
-                <div className="bg-zinc-900/40 p-6 rounded-[2rem] border border-rose-500/20 relative overflow-hidden group">
-                    <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2 py-1 rounded bg-rose-500/10 border border-rose-500/20 text-rose-500 text-[9px] font-black uppercase tracking-wider">
-                        <XCircle size={10} /> DON'T
-                    </div>
-                    <div className="h-24 flex items-center justify-center">
-                        <button className="px-6 py-2.5 bg-emerald-500 text-zinc-400 rounded-lg font-bold text-xs uppercase tracking-wide opacity-80 cursor-not-allowed">
-                            Confirm Action
-                        </button>
-                    </div>
-                    <div className="mt-2">
-                        <p className="text-[10px] font-bold text-white">Low Contrast</p>
-                        <p className="text-[10px] text-zinc-500 mt-1">
-                            "Never use light grey text on colored buttons. It fails WCAG AA standards."
-                        </p>
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Dropdown</label>
+                    <div className="relative">
+                        <select className="w-full bg-zinc-900 border border-white/10 rounded-lg py-2 pl-3 pr-8 text-xs text-white appearance-none focus:outline-none focus:border-emerald-500/50 cursor-pointer">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>
+                        <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
                     </div>
                 </div>
             </div>
         </section>
 
-        {/* SECTION 9: DATA TABLES & INTERACTION */}
+        {/* SECTION 7: DATA VISUALIZATION TOKENS */}
         <section className="space-y-8">
             <div className="flex items-end justify-between border-b border-white/5 pb-2">
                 <div className="flex items-center gap-2">
-                    <LayoutList className="text-emerald-500" size={20} />
-                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">09. Data Tables & Interaction</h2>
+                    <BarChart2 className="text-orange-500" size={20} />
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">07. Data Viz Colors</h2>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-600">Complex Lists & Filtering</span>
             </div>
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+                <div className="space-y-2 text-center">
+                    <div className="h-12 w-full bg-[#10b981] rounded-lg"></div>
+                    <span className="text-[10px] font-mono text-zinc-500">Emerald</span>
+                </div>
+                <div className="space-y-2 text-center">
+                    <div className="h-12 w-full bg-[#3b82f6] rounded-lg"></div>
+                    <span className="text-[10px] font-mono text-zinc-500">Blue</span>
+                </div>
+                <div className="space-y-2 text-center">
+                    <div className="h-12 w-full bg-[#8b5cf6] rounded-lg"></div>
+                    <span className="text-[10px] font-mono text-zinc-500">Violet</span>
+                </div>
+                <div className="space-y-2 text-center">
+                    <div className="h-12 w-full bg-[#f59e0b] rounded-lg"></div>
+                    <span className="text-[10px] font-mono text-zinc-500">Amber</span>
+                </div>
+                <div className="space-y-2 text-center">
+                    <div className="h-12 w-full bg-[#f43f5e] rounded-lg"></div>
+                    <span className="text-[10px] font-mono text-zinc-500">Rose</span>
+                </div>
+                <div className="space-y-2 text-center">
+                    <div className="h-12 w-full bg-[#71717a] rounded-lg"></div>
+                    <span className="text-[10px] font-mono text-zinc-500">Zinc</span>
+                </div>
+            </div>
+        </section>
 
-            {/* Example 1: Top Opportunities Table */}
-            <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] p-8 relative overflow-hidden">
-                <div className="mb-6 flex justify-between items-end">
-                    <div>
-                        <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Component: Opportunity Table</h3>
-                        <p className="text-zinc-400 text-xs">Used in Liquidity Manager. Features sorting, filtering, and rich data presentation.</p>
+        {/* SECTION 8: NAVIGATION */}
+        <section className="space-y-8">
+            <div className="flex items-end justify-between border-b border-white/5 pb-2">
+                <div className="flex items-center gap-2">
+                    <Compass className="text-zinc-300" size={20} />
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">08. Navigation Components</h2>
+                </div>
+            </div>
+            <div className="space-y-6">
+                <div className="p-4 bg-zinc-900/50 border border-white/5 rounded-xl">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-3">Segmented Control</h3>
+                    <div className="flex bg-[#0a0a0a] p-1 rounded-xl border border-white/5 w-fit">
+                        <button className="px-4 py-2 bg-zinc-800 text-white rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm">Dashboard</button>
+                        <button className="px-4 py-2 text-zinc-500 hover:text-zinc-300 rounded-lg text-[10px] font-black uppercase tracking-widest">Trade</button>
+                        <button className="px-4 py-2 text-zinc-500 hover:text-zinc-300 rounded-lg text-[10px] font-black uppercase tracking-widest">Earn</button>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                {/* THE TABLE PREVIEW */}
-                <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] overflow-hidden shadow-xl backdrop-blur-md relative flex flex-col max-w-4xl mx-auto">
-                    {/* Header Toolbar */}
-                    <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#0a0a0a]/50">
-                         <div className="flex items-center gap-3">
-                             <h3 className="text-sm font-black text-white uppercase tracking-wide">Top Opportunities</h3>
-                         </div>
-                         
-                         <div className="flex items-center gap-2">
-                             <div className="flex bg-zinc-900 rounded-lg p-1 border border-white/5 mr-2">
-                                <button className="px-3 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-wider transition-all bg-zinc-800 text-white shadow-sm flex items-center gap-1">
-                                    APY
-                                </button>
-                                <button className="px-3 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-wider transition-all text-zinc-500 hover:text-zinc-300 flex items-center gap-1">
-                                    Risk
-                                </button>
-                                <button className="px-3 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-wider transition-all text-zinc-500 hover:text-zinc-300 flex items-center gap-1">
-                                    TVL
-                                </button>
-                             </div>
+        {/* SECTION 9: FEEDBACK */}
+        <section className="space-y-8">
+            <div className="flex items-end justify-between border-b border-white/5 pb-2">
+                <div className="flex items-center gap-2">
+                    <Bell className="text-yellow-500" size={20} />
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">09. Feedback & Alerts</h2>
+                </div>
+            </div>
+            <div className="space-y-4">
+                <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center gap-3">
+                    <Info size={16} className="text-blue-500" />
+                    <span className="text-xs text-blue-200 font-medium">System update scheduled for 02:00 UTC. Trading will be paused.</span>
+                </div>
+                <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-3">
+                    <CheckCircle size={16} className="text-emerald-500" />
+                    <span className="text-xs text-emerald-200 font-medium">Order filled successfully at $3,240.50.</span>
+                </div>
+                <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center gap-3">
+                    <AlertTriangle size={16} className="text-amber-500" />
+                    <span className="text-xs text-amber-200 font-medium">Slippage is high (1.2%). Consider using a limit order.</span>
+                </div>
+                <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-center gap-3">
+                    <AlertOctagon size={16} className="text-rose-500" />
+                    <span className="text-xs text-rose-200 font-medium">Transaction failed. Insufficient gas funds.</span>
+                </div>
+            </div>
+        </section>
 
-                             <div className="flex bg-zinc-900 rounded-lg p-1 border border-white/5">
-                                <button className="p-1.5 rounded-md transition-all bg-zinc-800 text-white shadow-sm">
-                                    <LayoutList size={14} />
-                                </button>
-                                <button className="p-1.5 rounded-md transition-all text-zinc-500 hover:text-white">
-                                    <LayoutGrid size={14} />
-                                </button>
-                             </div>
-                         </div>
-                     </div>
+        {/* SECTION 10: ICONOGRAPHY */}
+        <section className="space-y-8">
+            <div className="flex items-end justify-between border-b border-white/5 pb-2">
+                <div className="flex items-center gap-2">
+                    <Star className="text-zinc-100" size={20} />
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">10. Iconography</h2>
+                </div>
+                <span className="text-[10px] font-mono text-zinc-600">Lucide React (Stroke 2px)</span>
+            </div>
+            <div className="grid grid-cols-8 md:grid-cols-12 gap-4">
+                {[
+                    Activity, ArrowLeftRight, BarChart2, Bell, Bot, Check, ChevronDown, 
+                    Command, Cpu, Globe, Grid, Hash, Info, Layers, LayoutGrid, 
+                    LayoutList, Loader2, Lock, MousePointer2, Palette, PenTool, 
+                    Search, Server, Settings, Shield, ShieldCheck, Skull, Star, 
+                    Timer, Type, Wifi, X, Zap
+                ].map((Icon, i) => (
+                    <div key={i} className="aspect-square bg-zinc-900 rounded-xl flex items-center justify-center border border-white/5 text-zinc-500 hover:text-white hover:bg-zinc-800 transition-colors">
+                        <Icon size={20} />
+                    </div>
+                ))}
+            </div>
+        </section>
 
-                     {/* Table Content */}
-                     <div className="w-full text-left">
-                        <div className="bg-[#0a0a0a]/90 backdrop-blur sticky top-0 z-10 text-[9px] font-black uppercase tracking-[0.15em] text-zinc-500 border-b border-white/10 grid grid-cols-6 px-6 py-4">
-                            <div className="col-span-2">Strategy</div>
-                            <div>Risk Profile</div>
-                            <div className="text-right">TVL</div>
-                            <div className="text-right">Net APY</div>
-                            <div className="text-right">Action</div>
-                        </div>
+        {/* SECTION 11: FORM & INPUT PATTERNS */}
+        <section className="space-y-8">
+            <div className="flex items-end justify-between border-b border-white/5 pb-2">
+                <div className="flex items-center gap-2">
+                    <PenTool className="text-zinc-400" size={20} />
+                    <h2 className="text-sm font-black text-zinc-300 uppercase tracking-[0.2em]">11. Complex Patterns</h2>
+                </div>
+                <span className="text-[10px] font-mono text-zinc-600">Compound Inputs</span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                {/* 11A: COMPOUND INPUTS */}
+                <div className="flex flex-col gap-6">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Split Input Group (TP/SL)</h3>
+                    
+                    <div className="bg-[#050505] p-8 border border-zinc-800 rounded-[2rem] flex flex-col justify-center gap-6">
                         
-                        <div className="divide-y divide-white/[0.03]">
-                            {/* Row 1 */}
-                            <div className="grid grid-cols-6 px-6 py-4 items-center group hover:bg-white/[0.02] transition-colors cursor-pointer">
-                                <div className="col-span-2 flex items-center gap-3">
-                                    <div className="flex -space-x-2">
-                                        <div className="w-8 h-8 rounded-full border-2 border-[#121214] bg-zinc-800 flex items-center justify-center text-[8px] text-white font-bold z-20">A</div>
-                                        <div className="w-8 h-8 rounded-full border-2 border-[#121214] bg-zinc-700 flex items-center justify-center text-[8px] text-white font-bold z-10">B</div>
-                                    </div>
-                                    <div>
-                                        <div className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">GMX GLP Index</div>
-                                        <div className="text-[9px] text-zinc-500 font-mono flex items-center gap-1.5 mt-0.5">
-                                            GMX • Liquidity
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[9px] font-black uppercase tracking-wider border bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
-                                        <ShieldCheck size={10} /> Low Risk
-                                    </div>
-                                </div>
-                                <div className="text-right font-mono text-xs font-bold text-zinc-300">$480M</div>
-                                <div className="text-right">
-                                    <span className="text-lg font-mono font-bold text-emerald-400 text-shadow-glow">38.2%</span>
-                                </div>
-                                <div className="text-right">
-                                    <button className="px-4 py-2 bg-zinc-800 text-zinc-300 border border-white/5 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all shadow-sm">
-                                        View
-                                    </button>
-                                </div>
+                        {/* Example 1: TP Input */}
+                        <div className="grid grid-cols-2 gap-2 w-full max-w-sm mx-auto">
+                            {/* Price Input */}
+                            <div className="bg-[#18181b] border border-white/5 rounded-lg p-3 focus-within:border-emerald-500/50 transition-colors">
+                                <label className="text-[9px] font-bold text-zinc-500 uppercase block mb-1">TP Price</label>
+                                <div className="text-sm font-mono font-bold text-white">65,420.50</div>
                             </div>
-
-                            {/* Row 2 */}
-                            <div className="grid grid-cols-6 px-6 py-4 items-center group hover:bg-white/[0.02] transition-colors cursor-pointer">
-                                <div className="col-span-2 flex items-center gap-3">
-                                    <div className="flex -space-x-2">
-                                        <div className="w-8 h-8 rounded-full border-2 border-[#121214] bg-blue-900 flex items-center justify-center text-[8px] text-white font-bold z-20">U</div>
-                                        <div className="w-8 h-8 rounded-full border-2 border-[#121214] bg-zinc-700 flex items-center justify-center text-[8px] text-white font-bold z-10">E</div>
-                                    </div>
-                                    <div>
-                                        <div className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">Uniswap V3 Pool</div>
-                                        <div className="text-[9px] text-zinc-500 font-mono flex items-center gap-1.5 mt-0.5">
-                                            Uniswap • Market Making
-                                        </div>
-                                    </div>
-                                </div>
+                            {/* ROI Input */}
+                            <div className="bg-[#18181b] border border-white/5 rounded-lg p-3 focus-within:border-emerald-500/50 transition-colors flex items-center justify-between">
                                 <div>
-                                    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[9px] font-black uppercase tracking-wider border bg-amber-500/10 text-amber-500 border-amber-500/20">
-                                        <ShieldCheck size={10} /> Moderate
-                                    </div>
+                                    <label className="text-[9px] font-bold text-zinc-500 uppercase block mb-1 flex items-center gap-1">Gain</label>
+                                    <div className="text-sm font-mono font-bold text-emerald-500">50.00</div>
                                 </div>
-                                <div className="text-right font-mono text-xs font-bold text-zinc-300">$840M</div>
-                                <div className="text-right">
-                                    <span className="text-lg font-mono font-bold text-emerald-400 text-shadow-glow">24.5%</span>
-                                </div>
-                                <div className="text-right">
-                                    <button className="px-4 py-2 bg-zinc-800 text-zinc-300 border border-white/5 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 hover:text-white hover:border-emerald-500 transition-all shadow-sm">
-                                        View
-                                    </button>
+                                <div className="flex items-center gap-1 text-[9px] font-bold text-zinc-500 bg-zinc-900 px-1.5 py-0.5 rounded border border-white/5">
+                                    % <ChevronDown size={8}/>
                                 </div>
                             </div>
                         </div>
-                     </div>
+
+                        {/* Rules */}
+                        <div className="space-y-2">
+                            <div className="flex gap-3 items-start">
+                                <div className="w-1 h-1 bg-emerald-500 rounded-full mt-1.5"></div>
+                                <p className="text-[10px] text-zinc-400 leading-relaxed">
+                                    <strong className="text-white">Bidirectional Binding:</strong> Editing Price auto-updates ROI %, and vice-versa.
+                                </p>
+                            </div>
+                            <div className="flex gap-3 items-start">
+                                <div className="w-1 h-1 bg-emerald-500 rounded-full mt-1.5"></div>
+                                <p className="text-[10px] text-zinc-400 leading-relaxed">
+                                    <strong className="text-white">Color Coding:</strong> Gain inputs use <span className="text-emerald-500">emerald-500</span>, Loss inputs use <span className="text-rose-500">rose-500</span>.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
+
+                {/* 11B: SLIDERS & TOGGLES */}
+                <div className="flex flex-col gap-6">
+                    <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Interactive Controls</h3>
+                    
+                    <div className="bg-zinc-900/40 p-8 border border-white/5 rounded-[2rem] space-y-8">
+                        
+                        {/* Leverage Slider */}
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-bold text-zinc-500 uppercase">Leverage</span>
+                                <span className="text-sm font-mono font-black text-white">20x</span>
+                            </div>
+                            <div className="relative h-2 w-full bg-zinc-800 rounded-full">
+                                <div className="absolute top-0 left-0 h-full w-[40%] bg-emerald-500 rounded-full"></div>
+                                <div className="absolute top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg border-2 border-zinc-900"></div>
+                            </div>
+                        </div>
+
+                        {/* Checkbox Toggle */}
+                        <div className="flex items-center gap-3 p-3 bg-[#18181b] rounded-xl border border-white/5 w-fit">
+                            <div className="w-5 h-5 bg-emerald-500 rounded flex items-center justify-center text-black">
+                                <CheckCircle size={14} />
+                            </div>
+                            <span className="text-[10px] font-bold text-white uppercase tracking-wide">TP / SL Enabled</span>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -680,5 +642,10 @@ const DesignSystemView: React.FC = () => {
     </div>
   );
 };
+
+// Helper for Icon in Section 8 (Compass was missing in lucide export for some versions, using substitute if needed, or import above)
+const Compass = ({ className, size }: { className?: string, size?: number }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+);
 
 export default DesignSystemView;
