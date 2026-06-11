@@ -1,7 +1,7 @@
-import React from 'react';
-import { useAlgoLogic } from '../../../hooks/useAlgoLogic';
-import { AlgoForm } from './AlgoForm';
-import { AlgoAnalysis } from './AlgoAnalysis';
+import React from "react";
+import { useAlgoLogic } from "../../../hooks/useAlgoLogic";
+import { AlgoForm } from "./AlgoForm";
+import { AlgoAnalysis } from "./AlgoAnalysis";
 
 interface AlgoPanelProps {
   amount: string;
@@ -11,9 +11,9 @@ interface AlgoPanelProps {
 
 const AlgoPanel: React.FC<AlgoPanelProps> = (props) => {
   const logic = useAlgoLogic({
-      amount: props.amount, 
-      onAmountChange: props.onAmountChange, 
-      balance: props.balance 
+    amount: props.amount,
+    onAmountChange: props.onAmountChange,
+    balance: props.balance,
   });
 
   return (

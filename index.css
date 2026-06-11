@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+@theme {
+  /* --- 01. TYPOGRAPHY SYSTEM --- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --text-3xs: 9px;
+  --text-3xs--line-height: 12px;
+  --text-3xs--letter-spacing: 0.05em;
+  --text-3xs--font-weight: 700;
+
+  --text-2xs: 10px;
+  --text-2xs--line-height: 14px;
+  --text-2xs--letter-spacing: 0.025em;
+  --text-2xs--font-weight: 600;
+
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-xs--letter-spacing: 0;
+
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-sm--letter-spacing: -0.01em;
+
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-base--letter-spacing: -0.01em;
+
+  --text-lg: 18px;
+  --text-lg--line-height: 28px;
+  --text-lg--letter-spacing: -0.02em;
+
+  --text-xl: 20px;
+  --text-xl--line-height: 28px;
+  --text-xl--letter-spacing: -0.02em;
+
+  --text-2xl: 24px;
+  --text-2xl--line-height: 32px;
+  --text-2xl--letter-spacing: -0.03em;
+
+  --text-3xl: 30px;
+  --text-3xl--line-height: 36px;
+  --text-3xl--letter-spacing: -0.03em;
+
+  --text-4xl: 36px;
+  --text-4xl--line-height: 40px;
+  --text-4xl--letter-spacing: -0.04em;
+
+  --text-5xl: 48px;
+  --text-5xl--line-height: 1;
+  --text-5xl--letter-spacing: -0.04em;
+
+  --text-6xl: 60px;
+  --text-6xl--line-height: 1;
+  --text-6xl--letter-spacing: -0.04em;
+
+  /* --- 02. COLOR PALETTE ARCHITECTURE --- */
+  --color-primary: #10b981;
+  --color-primary-foreground: #000000;
+  --color-primary-hover: #34d399;
+  --color-primary-active: #059669;
+  --color-primary-subtle: rgba(16, 185, 129, 0.1);
+  --color-primary-glow: rgba(16, 185, 129, 0.4);
+
+  --color-secondary: #a855f7;
+  --color-secondary-foreground: #ffffff;
+  --color-secondary-hover: #c084fc;
+  --color-secondary-subtle: rgba(168, 85, 247, 0.1);
+  --color-secondary-glow: rgba(168, 85, 247, 0.4);
+
+  --color-destructive: #f43f5e;
+  --color-destructive-foreground: #ffffff;
+  --color-destructive-hover: #fb7185;
+  --color-destructive-subtle: rgba(244, 63, 94, 0.1);
+
+  --color-warning: #f59e0b;
+  --color-warning-foreground: #000000;
+  --color-warning-hover: #fbbf24;
+  --color-warning-subtle: rgba(245, 158, 11, 0.1);
+
+  --color-info: #3b82f6;
+  --color-info-foreground: #ffffff;
+  --color-info-hover: #60a5fa;
+  --color-info-subtle: rgba(59, 130, 246, 0.1);
+
+  /* Deep Space Theme Surface Architecture */
+  --color-background: #050507;
+  --color-background-subtle: #050505;
+  --color-background-card: #09090b;
+  --color-background-surface: #0a0a0a;
+  --color-background-input: #18181b;
+  --color-background-elevated: #1a1a1a;
+  
+  --color-background-hover: rgba(255, 255, 255, 0.05); /* Usually maps to hover:bg-white/5 */
+  --color-background-active: rgba(255, 255, 255, 0.1); 
+
+  /* Content Hierarchy */
+  --color-content: #ffffff; /* pure white for active/primary */
+  --color-content-secondary: #a1a1aa; /* zinc-400 for structural text */
+  --color-content-tertiary: #52525b; /* zinc-600 space-grade dimming */
+  --color-content-muted: #3f3f46; /* zinc-700 extremely subtle watermark info */
+  --color-content-inverse: #000000;
+
+  /* Border System */
+  --color-border: rgba(255, 255, 255, 0.08); /* DEFAULT */
+  --color-subtle: rgba(255, 255, 255, 0.04);
+  --color-strong: rgba(255, 255, 255, 0.15);
+  --color-hover: rgba(255, 255, 255, 0.20); /* Hovering cards/inputs */
+  --color-active: rgba(255, 255, 255, 0.25); /* Focus states */
+
+  /* --- 03. SPACING & SHAPE --- */
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+  --radius-full: 9999px;
+
+  /* --- 04. DEPTH & EFFECTS --- */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+  --shadow-glow-sm: 0 0 10px rgba(16, 185, 129, 0.2);
+  --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.4);
+  --shadow-glow-lg: 0 0 30px rgba(16, 185, 129, 0.5);
+  --shadow-glow-purple: 0 0 20px rgba(168, 85, 247, 0.4);
+  --shadow-glow-rose: 0 0 20px rgba(244, 63, 94, 0.4);
+
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-inner-light: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+
+  --background-image-gradient-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  --background-image-gradient-brand: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+  /* --- 05. ANIMATION PHYSICS --- */
+  --animate-fade-in: fadeIn 0.4s ease-out forwards;
+  --animate-zoom-in: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-up: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-in-right: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-pulse-slow: customPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-bounce-soft: bounceSoft 2s infinite;
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes zoomIn {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideUp {
+    0% { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideInRight {
+    0% { transform: translateX(20px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes bounceSoft {
+    0%, 100% { transform: translateY(-2%); }
+    50% { transform: translateY(0); }
+  }
+  @keyframes customPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+  }
+}
+
+/* Base Styles & Structural Overrides */
+@layer base {
+  body {
+    @apply bg-background text-content font-sans antialiased;
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; Removed from here, as the App handles layout and we shouldn't force globally */
+  }
+
+  /* Scrollbar Styles */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #2a2a2a; }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-primary-subtle text-primary;
+  }
+}
+
+/* Complex UI Component Tokens (Design System Primitives) */
+@layer components {
+  /* Level 1: Primary Application Container (Glass) */
+  .glass-panel {
+    @apply bg-zinc-900/40 border border-white/5 rounded-5xl shadow-2xl backdrop-blur-md relative overflow-hidden transition-all duration-300;
+  }
+  
+  /* Level 1.5: Modals / Floating Panels (Opaque) */
+  .surface-modal {
+    @apply bg-background-card border border-white/10 rounded-2xl shadow-xl;
+  }
+  
+  /* Level 2: Grouping / Inset Areas */
+  .surface-group {
+    @apply bg-zinc-900/30 border border-white/5 rounded-xl;
+  }
+  
+  /* Level 3: Interactive List Items / Cards */
+  .surface-interactive {
+    @apply bg-transparent border border-transparent rounded-lg transition-all duration-200 cursor-pointer;
+  }
+  .surface-interactive:hover {
+    @apply bg-zinc-800 border-white/5;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground font-semibold rounded-lg transition-colors hover:bg-primary-hover active:bg-primary-active;
+  }
+  .btn-secondary {
+    @apply bg-zinc-800 text-content border border-white/10 font-medium rounded-lg transition-colors hover:bg-zinc-700 active:bg-zinc-900;
+  }
+  
+  /* Inputs */
+  .input-base {
+    @apply bg-background-input border border-border rounded-lg text-content transition-colors focus:outline-none focus:border-active focus:ring-1 focus:ring-active placeholder:text-content-tertiary;
+  }
+}
+
+/* Shared Utilities */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover;
+  }
+}

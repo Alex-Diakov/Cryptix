@@ -1,7 +1,7 @@
-import React from 'react';
-import { useLimitLogic } from '../../../hooks/useLimitLogic';
-import { LimitForm } from './LimitForm';
-import { LimitAnalysis } from './LimitAnalysis';
+import React from "react";
+import { useLimitLogic } from "../../../hooks/useLimitLogic";
+import { LimitForm } from "./LimitForm";
+import { LimitAnalysis } from "./LimitAnalysis";
 
 interface LimitPanelProps {
   amount: string;
@@ -10,10 +10,10 @@ interface LimitPanelProps {
 }
 
 const LimitPanel: React.FC<LimitPanelProps> = (props) => {
-  const logic = useLimitLogic({ 
-      amount: props.amount, 
-      onAmountChange: props.onAmountChange, 
-      balance: props.balance 
+  const logic = useLimitLogic({
+    amount: props.amount,
+    onAmountChange: props.onAmountChange,
+    balance: props.balance,
   });
 
   return (

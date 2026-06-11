@@ -65,12 +65,23 @@ export const useSwapLogic = ({ initialAmount, onAmountChange, balance }: UseSwap
         const pay = numericPay;
         const usdValue = pay * ETH_PRICE;
         
-        const MOCK_LIQUIDITY = 10_000_000; 
-        const IMPACT_MULTIPLIER = 2.85; 
+        // Realistic AMM Math (x * y = k)
+        // Assume a deep pool of 2M ETH
+        const poolEth = 2_000_000;
+        const poolUsdc = poolEth * ETH_PRICE;
+        
+        let receiveValNum = 0;
         let swapImpactPct = 0;
-        if (usdValue > 0) {
-            swapImpactPct = (usdValue / MOCK_LIQUIDITY) * IMPACT_MULTIPLIER;
+        let swapImpactCost = 0;
+
+        if (pay > 0) {
+            const receiveUsdc = poolUsdc - (poolEth * poolUsdc) / (poolEth + pay);
+            const idealValue = pay * ETH_PRICE;
+            swapImpactCost = idealValue - receiveUsdc;
+            swapImpactPct = (swapImpactCost / idealValue) * 100;
+            receiveValNum = receiveUsdc;
         }
+
         const platformFee = usdValue * 0.0005;
         
         let networkFee = 9.75;
@@ -92,21 +103,20 @@ export const useSwapLogic = ({ initialAmount, onAmountChange, balance }: UseSwap
             routeSplit = [{ dex: 'Uniswap V3', pct: 100, color: 'bg-white', rate: baseRate, impact: 0.00 }];
         }
 
-        const swapImpactCost = usdValue * (swapImpactPct / 100);
         const totalSwapCost = swapImpactCost + platformFee + networkFee;
-        const receiveValNum = Math.max(0, usdValue - totalSwapCost);
+        receiveValNum = Math.max(0, receiveValNum - platformFee - networkFee);
         const minReceived = receiveValNum * (1 - slippage/100);
 
-        let routingScore = 10 - (swapImpactPct * 10);
+        let routingScore = 10 - (swapImpactPct * 2); // Adjusted penalty
         if (routingScore < 1) routingScore = 1;
         
         let scoreLabel = 'OPTIMAL';
-        if (swapImpactPct > 0.3) scoreLabel = 'FAIR';
-        if (swapImpactPct > 1.0) scoreLabel = 'POOR';
+        if (swapImpactPct > 1.0) scoreLabel = 'FAIR';
+        if (swapImpactPct > 5.0) scoreLabel = 'POOR';
 
         return {
-            receiveValNum, minReceived, swapImpactPct, platformFee, networkFee, routeSplit,
-            routingScore: routingScore.toFixed(1), scoreLabel
+            receiveValNum, minReceived, swapImpactPct, swapImpactCost, platformFee, networkFee, totalSwapCost, routeSplit,
+            routingScore: routingScore.toFixed(1), scoreLabel, usdValue
         };
     }, [numericPay, gasSpeed, slippage]);
 
