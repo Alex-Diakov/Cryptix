@@ -64,13 +64,12 @@ export const SwapForm: React.FC<SwapFormProps> = ({
     <section className="lg:col-span-4 flex flex-col h-full gap-5">
       {/* Main Card - using glass-panel component */}
       <div
-        className={`glass-panel p-2 ${isReviewing ? "opacity-50 pointer-events-none grayscale-[0.5]" : ""}`}
+        className={`surface-modal p-6 md:p-8 space-y-2 relative ${isReviewing ? "opacity-50 pointer-events-none grayscale-[0.5]" : ""}`}
       >
-        <div className="bg-background-surface rounded-[2.2rem] p-6 border border-subtle space-y-2">
           {/* 1. PAY BLOCK */}
-          <div className="bg-background-subtle rounded-3xl p-5 border border-subtle focus-within:border-emerald-500/30 transition-colors group relative">
+          <div className="surface-group p-5 relative group focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/50 transition-all">
             <div className="flex justify-between items-start mb-4">
-              <label className="text-[9px] font-black text-content-tertiary uppercase tracking-[0.2em] group-focus-within:text-emerald-500 transition-colors">
+              <label className="text-xs font-black text-content-secondary uppercase tracking-[0.1em] group-focus-within:text-primary transition-colors">
                 You Pay
               </label>
               <div className="text-[9px] font-bold text-content-tertiary bg-background-card px-2 py-1 rounded-lg border border-subtle flex items-center gap-2">
@@ -138,21 +137,19 @@ export const SwapForm: React.FC<SwapFormProps> = ({
           </div>
 
           {/* CONNECTOR */}
-          <div className="relative h-4 w-full flex items-center justify-center z-10 -my-3">
-            <div className="p-1.5 bg-background-surface rounded-full border border-strong shadow-xl">
-              <div
-                onClick={handleFlip}
-                className="bg-background-card p-1.5 rounded-full text-content-tertiary hover:text-emerald-500 transition-colors cursor-pointer active:rotate-180 duration-300"
-              >
-                <ArrowDown size={14} strokeWidth={3} />
-              </div>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full flex justify-center pointer-events-none">
+            <div
+              onClick={handleFlip}
+              className="w-12 h-12 bg-background border border-strong rounded-full flex items-center justify-center text-content-secondary hover:text-primary hover:border-primary transition-all shadow-lg ring-4 ring-background-card group pointer-events-auto cursor-pointer active:rotate-180 duration-300"
+            >
+              <ArrowDown size={20} strokeWidth={2} />
             </div>
           </div>
 
           {/* 2. RECEIVE BLOCK */}
-          <div className="bg-background-subtle rounded-3xl p-5 border border-subtle focus-within:border-emerald-500/30 transition-colors group">
+          <div className="surface-group p-5 relative group focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/50 transition-all mt-2">
             <div className="flex justify-between items-start mb-4">
-              <label className="text-[9px] font-black text-content-tertiary uppercase tracking-[0.2em] group-focus-within:text-emerald-500 transition-colors">
+              <label className="text-xs font-black text-content-secondary uppercase tracking-[0.1em] group-focus-within:text-primary transition-colors">
                 {recipientMode ? "Recipient Gets" : "You Receive"}
               </label>
               {recipientMode && (
@@ -212,7 +209,7 @@ export const SwapForm: React.FC<SwapFormProps> = ({
               className="flex items-center gap-2 text-content-tertiary hover:text-content-secondary transition-colors group w-full"
             >
               <div
-                className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${recipientMode ? "bg-emerald-500 border-emerald-500 text-black" : "border-strong bg-transparent"}`}
+                className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${recipientMode ? "bg-primary border-primary text-black" : "border-strong bg-transparent"}`}
               >
                 {recipientMode && <Check size={10} strokeWidth={4} />}
               </div>
@@ -230,14 +227,13 @@ export const SwapForm: React.FC<SwapFormProps> = ({
                 value={recipientAddress}
                 onChange={(e) => setRecipientAddress(e.target.value)}
                 placeholder="0x..."
-                className="w-full bg-background-subtle border border-strong rounded-xl py-3 pl-10 pr-4 text-xs font-mono text-white focus:outline-none focus:border-emerald-500/50"
+                className="input-base w-full py-3 pl-10 pr-4 text-xs font-mono"
               />
               <div className="absolute left-3.5 top-3.5 text-content-tertiary">
                 <User size={14} />
               </div>
             </div>
           </div>
-        </div>
 
         {/* Review Overlay */}
         {isReviewing && (
